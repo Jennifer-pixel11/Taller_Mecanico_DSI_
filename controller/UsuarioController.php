@@ -40,12 +40,15 @@ if (isset($_POST['accion'])) {
 
     if ($accion === 'register') {
         $rol = 'Visitante'; // por defecto
+        $correo = isset($_POST['correo']) ? trim($_POST['correo']) : 'sin_correo@example.com';
+        $telefono = isset($_POST['telefono']) ? trim($_POST['telefono']) : null;
 
-        // Evitar registros con otros roles si no es gerente
+        // Solo el gerente puede elegir el rol
         if (isset($_POST['rol']) && isset($_SESSION['rol']) && $_SESSION['rol'] === 'Gerente') {
-            $rol = $_POST['rol']; // solo el gerente puede establecer otro rol
+            $rol = $_POST['rol'];
         }
 
+        // Verificar si ya existe el usuario
         $stmt = $conn->prepare("SELECT id FROM usuarios WHERE usuario = ?");
         $stmt->bind_param("s", $usuario);
         $stmt->execute();
@@ -56,9 +59,10 @@ if (isset($_POST['accion'])) {
             exit;
         }
 
+        // Crear usuario
         $claveHash = password_hash($clave, PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("INSERT INTO usuarios (usuario, clave, rol) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $usuario, $claveHash, $rol);
+        $stmt = $conn->prepare("INSERT INTO usuarios (usuario, clave, rol, correo, telefono) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $usuario, $claveHash, $rol, $correo, $telefono);
 
         if ($stmt->execute()) {
             echo "<script>alert('Usuario registrado correctamente');window.location.href='../index.html';</script>";

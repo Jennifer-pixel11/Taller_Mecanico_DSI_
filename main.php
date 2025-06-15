@@ -9,8 +9,6 @@ $usuario = $_SESSION['usuario'];
 $rol = $_SESSION['rol'];
 date_default_timezone_set('America/El_Salvador');
 $hora = date("d/m/Y H:i:s");
-
-
 ?>
 
 <!DOCTYPE html>

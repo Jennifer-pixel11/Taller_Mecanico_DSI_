@@ -1,5 +1,7 @@
 <?php
 // model/Cita.php
+session_start();
+$usuario = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : 'Desconocido';
 
 // Conexión
 $conexion = new mysqli("localhost", "root", "", "taller");
@@ -9,10 +11,15 @@ if ($conexion->connect_error) {
 
 // Agendar nueva cita
 if (isset($_POST['agendar'])) {
-    $cliente = $_POST['cliente'];
+    //$cliente = $_POST['cliente'];
+    $cliente = $usuario;
     $vehiculo = $_POST['vehiculo'];
     $fecha = $_POST['fecha'];
-    $conexion->query("INSERT INTO citas (cliente, vehiculo, fecha) VALUES ('$cliente', '$vehiculo', '$fecha')");
+    $hora = $_POST['hora'];
+    $descripcion = $_POST['descripcion'];
+    $servicio = $_POST['servicio'];
+    $conexion->query("INSERT INTO citas (cliente, vehiculo, fecha, hora, descripcion, servicio, usuario) 
+                      VALUES ('$cliente', '$vehiculo', '$fecha', '$hora', '$descripcion', '$servicio', '$usuario')");
     header("Location: Cita.php");
     exit;
 }
@@ -53,29 +60,7 @@ $citas = $conexion->query("SELECT * FROM citas");
     <h2 class="text-center mb-4">Agendar Citas</h2>
     <a href="../main.php" class="btn btn-secondary mb-3">Volver al Panel</a>
 
-    <!-- Formulario -->
-    <div class="card mb-4">
-      <div class="card-header">Nueva Cita</div>
-      <div class="card-body">
-        <form method="post">
-          <div class="mb-3">
-            <label class="form-label">Nombre del Cliente</label>
-            <input type="text" name="cliente" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Vehículo</label>
-            <input type="text" name="vehiculo" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Fecha</label>
-            <input type="date" name="fecha" class="form-control" required>
-          </div>
-          <button type="submit" name="agendar" class="btn btn-success">Guardar Cita</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- Tabla -->
+        <!-- Tabla -->
     <table class="table table-bordered table-hover table-light">
       <thead class="table-dark">
         <tr>
@@ -83,6 +68,9 @@ $citas = $conexion->query("SELECT * FROM citas");
           <th>Cliente</th>
           <th>Vehículo</th>
           <th>Fecha</th>
+          <th>Hora</th>
+          <th>Servicio</th>
+          <th>Descripción</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -93,6 +81,9 @@ $citas = $conexion->query("SELECT * FROM citas");
           <td><?= $cita['cliente'] ?></td>
           <td><?= $cita['vehiculo'] ?></td>
           <td><?= $cita['fecha'] ?></td>
+          <td><?= $cita['hora'] ?></td>
+          <td><?= $cita['servicio'] ?></td>
+          <td><?= $cita['descripcion'] ?></td>
           <td>
             <a href="?eliminar=<?= $cita['id'] ?>" onclick="return confirm('¿Eliminar esta cita?')" class="btn btn-sm btn-danger">Eliminar</a>
           </td>
@@ -100,6 +91,39 @@ $citas = $conexion->query("SELECT * FROM citas");
         <?php endwhile; ?>
       </tbody>
     </table>
+    <!-- Formulario -->
+    <div class="card mb-4">
+      <div class="card-header">Nueva Cita</div>
+      <div class="card-body">
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label">Cliente</label>
+            <input type="text" class="form-control" value="<?= htmlspecialchars($usuario) ?>" disabled>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Vehículo</label>
+            <input type="text" name="vehiculo" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Fecha</label>
+            <input type="date" name="fecha" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Hora</label>
+            <input type="time" name="hora" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea name="descripcion" class="form-control" rows="3" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Servicio</label>
+            <input type="text" name="servicio" class="form-control" required>
+          </div>
+          <button type="submit" name="agendar" class="btn btn-success">Guardar Cita</button>
+        </form>
+      </div>
+    </div>
   </div>
 </body>
 </html>
