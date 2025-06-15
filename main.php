@@ -8,7 +8,9 @@ if (!isset($_SESSION['usuario']) || !isset($_SESSION['rol'])) {
 $usuario = $_SESSION['usuario'];
 $rol = $_SESSION['rol'];
 date_default_timezone_set('America/El_Salvador');
-$hora = date("H:i:s");
+$hora = date("d/m/Y H:i:s");
+
+
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +68,18 @@ $hora = date("H:i:s");
             </div>
           </div>
         </div>
+
       <?php endif; ?>
+
+        <div class="col-md-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <img src="public/proveedor.png" alt="Proveedor" class="img-fluid">
+              <h5 class="card-title">Proveedor</h5>
+              <a href="model/Proveedor.php" class="btn btn-outline-warning w-100">Proveedor</a>
+            </div>
+          </div>
+        </div>
 
       <div class="col-md-3">
         <div class="card text-center">
