@@ -1,37 +1,4 @@
-<?php
-// model/Proveedor.php
-
-$conexion = new mysqli("localhost", "root", "", "taller");
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
-
-// Registrar proveedor
-if (isset($_POST['agregarProveedor'])) {
-    $nombre = $_POST['nombre'];
-    $nombre_contacto = $_POST['nombre_contacto'];
-    $telefono = $_POST['telefono'];
-    $correo_electronico = $_POST['correo_electronico'];
-    $direccion = $_POST['direccion'];
-    $rubro = $_POST['rubro'];
-
-    $conexion->query("INSERT INTO proveedor_insumos (nombre, nombre_contacto, telefono, correo_electronico, direccion, rubro) 
-                      VALUES ('$nombre', '$nombre_contacto', '$telefono', '$correo_electronico', '$direccion', '$rubro')");
-    header("Location: Proveedor.php");
-    exit;
-}
-
-// Eliminar proveedor
-if (isset($_GET['eliminar'])) {
-    $id = $_GET['eliminar'];
-    $conexion->query("DELETE FROM proveedor_insumos WHERE id_proveedor = $id");
-    header("Location: Proveedor.php");
-    exit;
-}
-
-// Obtener proveedores
-$resultado = $conexion->query("SELECT * FROM proveedor_insumos");
-?>
+<?php include("../controller/ProveedorController.php"); ?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -54,40 +21,45 @@ $resultado = $conexion->query("SELECT * FROM proveedor_insumos");
 </head>
 <body>
   <div class="container py-5">
-    <h2 class="text-center mb-4">Registrar Proveedor</h2>
+    <h2 class="text-center mb-4">Gestión de Proveedores</h2>
     <a href="../main.php" class="btn btn-secondary mb-3">Volver al Panel</a>
+    
+    <!-- Botón para mostrar/ocultar formulario -->
+    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#formularioProveedor">+ Agregar Proveedor</button>
 
     <!-- Formulario -->
-    <div class="card mb-4">
-      <div class="card-header">Nuevo Proveedor</div>
-      <div class="card-body">
-        <form method="post">
-          <div class="mb-3">
-            <label class="form-label">Nombre del Proveedor</label>
-            <input type="text" name="nombre" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Nombre de contacto</label>
-            <input type="text" name="nombre_contacto" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Teléfono</label>
-            <input type="text" name="telefono" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Correo electrónico</label>
-            <input type="email" name="correo_electronico" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Dirección</label>
-            <input type="text" name="direccion" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Rubro</label>
-            <input type="text" name="rubro" class="form-control" required>
-          </div>
-          <button type="submit" name="agregarProveedor" class="btn btn-success">Guardar</button>
-        </form>
+    <div class="collapse" id="formularioProveedor">
+      <div class="card mb-4">
+        <div class="card-header">Nuevo Proveedor</div>
+        <div class="card-body">
+          <form method="post">
+            <div class="mb-3">
+              <label class="form-label">Nombre del Proveedor</label>
+              <input type="text" name="nombre" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Nombre de contacto</label>
+              <input type="text" name="nombre_contacto" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Teléfono</label>
+              <input type="text" name="telefono" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Correo electrónico</label>
+              <input type="email" name="correo_electronico" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Dirección</label>
+              <input type="text" name="direccion" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Rubro</label>
+              <input type="text" name="rubro" class="form-control" required>
+            </div>
+            <button type="submit" name="agregarProveedor" class="btn btn-success">Guardar</button>
+          </form>
+        </div>
       </div>
     </div>
 
@@ -97,13 +69,13 @@ $resultado = $conexion->query("SELECT * FROM proveedor_insumos");
         <tr>
           <th>ID</th>
           <th>Nombre</th>
-          <th>Nombre de contacto</th>
+          <th>Contacto</th>
           <th>Teléfono</th>
-          <th>Correo electrónico</th>
+          <th>Correo</th>
           <th>Dirección</th>
           <th>Rubro</th>
           <th>Estado</th>
-          <th>Fecha de registro</th>
+          <th>Registro</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -120,12 +92,14 @@ $resultado = $conexion->query("SELECT * FROM proveedor_insumos");
           <td><?= $fila['estado'] ?></td>
           <td><?= $fila['fecha_registro'] ?></td>
           <td>
-            <a href="?eliminar=<?= $fila['id_proveedor'] ?>" onclick="return confirm('¿Eliminar este Proveedor?')" class="btn btn-sm btn-danger">Eliminar</a>
+            <a href="?eliminar=<?= $fila['id_proveedor'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar proveedor?')">Eliminar</a>
           </td>
         </tr>
         <?php endwhile; ?>
       </tbody>
     </table>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

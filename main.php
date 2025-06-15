@@ -69,17 +69,17 @@ $hora = date("d/m/Y H:i:s");
           </div>
         </div>
 
-      <?php endif; ?>
-
         <div class="col-md-3">
           <div class="card text-center">
             <div class="card-body">
               <img src="public/proveedor.png" alt="Proveedor" class="img-fluid">
-              <h5 class="card-title">Proveedor</h5>
+              <h5 class="card-title">Proveedores</h5>
               <a href="model/Proveedor.php" class="btn btn-outline-warning w-100">Proveedor</a>
             </div>
           </div>
         </div>
+
+      <?php endif; ?>
 
       <div class="col-md-3">
         <div class="card text-center">
