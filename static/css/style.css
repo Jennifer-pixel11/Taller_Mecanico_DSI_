@@ -1,0 +1,39 @@
+#barnav{
+    text-decoration-color: aliceblue;
+}
+body {
+      background: linear-gradient(to right, #004e92, #000428);
+      color: white;
+}
+.card {
+      border-radius: 15px;
+      background-color: white;
+      color: black;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.card img {
+      height: 80px;
+      margin-bottom: 10px;
+}
+
+
+#modalProducto .modal-title {
+  color: #004e92;
+  font-weight: bold;
+}
+
+#modalProducto .form-label {
+  color: #000428;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+#modalProveedor .modal-title {
+  color: #004e92;
+  font-weight: bold;
+}
+#modalProveedor .form-label {
+  color: #000428;
+  font-weight: 600;
+  font-size: 14px;
+}
