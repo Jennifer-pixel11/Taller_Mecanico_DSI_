@@ -17,7 +17,7 @@ if (isset($_POST['agregarProveedor'])) {
 
     $conexion->query("INSERT INTO proveedor_insumos (nombre, nombre_contacto, telefono, correo_electronico, direccion, rubro) 
                       VALUES ('$nombre', '$nombre_contacto', '$telefono', '$correo_electronico', '$direccion', '$rubro')");
-    header("Location: Proveedor.php");
+    header("Location: ProveedorView.php");
     exit;
 }
 
@@ -25,7 +25,7 @@ if (isset($_POST['agregarProveedor'])) {
 if (isset($_GET['eliminar'])) {
     $id = $_GET['eliminar'];
     $conexion->query("DELETE FROM proveedor_insumos WHERE id_proveedor = $id");
-    header("Location: Proveedor.php");
+    header("Location: ProveedorView.php");
     exit;
 }
 

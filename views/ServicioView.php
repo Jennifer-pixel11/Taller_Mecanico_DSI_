@@ -2,6 +2,9 @@
 include '../model/Servicio.php';
 include '../components/navbar.php';
 ?>
+<head>
+  <title>Servicios</title>
+</head>
 
 <div class="container py-5">
   <h2 class="text-center mb-4">Registro de Servicios</h2>

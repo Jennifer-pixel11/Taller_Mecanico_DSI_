@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Proveedores</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="/Taller_Mecanico_DSI_/static/css/style.css">
@@ -22,7 +21,7 @@
         <div class="collapse navbar-collapse" id="menuExpandible">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/main.php">INICIO</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/InventarioView.php">INVENTARIO</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/model/Inventario.php">INVENTARIO</a></li>
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/ServicioView.php">SERVICIOS</a></li>
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/ProveedorView.php">PROVEEDORES</a></li>
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/CitaView.php">CITAS</a></li>

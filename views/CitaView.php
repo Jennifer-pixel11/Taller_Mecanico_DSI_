@@ -2,41 +2,12 @@
 include '../model/Cita.php';
 include '../components/navbar.php';
 ?>
-
+<head>
+  <title>Citas</title>
+</head>
 <div class="container py-5">
   <h2 class="text-center mb-4">Agendar Citas</h2>
 
-  <!-- Tabla -->
-  <table class="table table-bordered table-hover table-light">
-    <thead class="table-dark">
-      <tr>
-        <th>ID</th>
-        <th>Cliente</th>
-        <th>Vehículo</th>
-        <th>Fecha</th>
-        <th>Hora</th>
-        <th>Servicio</th>
-        <th>Descripción</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php while ($cita = $citas->fetch_assoc()): ?>
-        <tr>
-          <td><?= $cita['id'] ?></td>
-          <td><?= $cita['cliente'] ?></td>
-          <td><?= $cita['vehiculo'] ?></td>
-          <td><?= $cita['fecha'] ?></td>
-          <td><?= $cita['hora'] ?></td>
-          <td><?= $cita['servicio'] ?></td>
-          <td><?= $cita['descripcion'] ?></td>
-          <td>
-            <a href="?eliminar=<?= $cita['id'] ?>" onclick="return confirm('¿Eliminar esta cita?')" class="btn btn-sm btn-danger">Eliminar</a>
-          </td>
-        </tr>
-      <?php endwhile; ?>
-    </tbody>
-  </table>
   <!-- Formulario -->
   <div class="card mb-4">
     <div class="card-header">Nueva Cita</div>
@@ -70,4 +41,36 @@ include '../components/navbar.php';
       </form>
     </div>
   </div>
+
+  <!-- Tabla -->
+  <table class="table table-bordered table-hover table-light">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Vehículo</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Servicio</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php while ($cita = $citas->fetch_assoc()): ?>
+        <tr>
+          <td><?= $cita['id'] ?></td>
+          <td><?= $cita['cliente'] ?></td>
+          <td><?= $cita['vehiculo'] ?></td>
+          <td><?= $cita['fecha'] ?></td>
+          <td><?= $cita['hora'] ?></td>
+          <td><?= $cita['servicio'] ?></td>
+          <td><?= $cita['descripcion'] ?></td>
+          <td>
+            <a href="?eliminar=<?= $cita['id'] ?>" onclick="return confirm('¿Eliminar esta cita?')" class="btn btn-sm btn-danger">Eliminar</a>
+          </td>
+        </tr>
+      <?php endwhile; ?>
+    </tbody>
+  </table>
 </div>

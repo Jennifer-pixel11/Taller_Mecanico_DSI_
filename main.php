@@ -11,16 +11,10 @@ date_default_timezone_set('America/El_Salvador');
 $hora = date("d/m/Y H:i:s");
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Principal - Taller Mecánico</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/Taller_Mecanico_DSI_/static/css/style.css">
 </head>
-<body>
+
   <?php include 'components/navbar.php'; ?>  
 
   <div class="container py-4">
@@ -38,7 +32,7 @@ $hora = date("d/m/Y H:i:s");
             <div class="card-body">
               <img src="public/inventario.png" alt="Inventario" class="img-fluid">
               <h5 class="card-title">Inventario</h5>
-              <a href="/Taller_Mecanico_DSI_/views/InventarioView.php" class="btn btn-outline-primary w-100">Gestionar</a>
+              <a href="/Taller_Mecanico_DSI_/model/Inventario.php" class="btn btn-outline-primary w-100">Gestionar</a>
             </div>
           </div>
         </div>
@@ -99,5 +93,3 @@ $hora = date("d/m/Y H:i:s");
 
     </div>
   </div>
-</body>
-</html>

@@ -2,7 +2,9 @@
 include '../model/Notificacion.php';
 include '../components/navbar.php';
 ?>
-
+<head>
+  <title>Notificaciones</title>
+</head>
 <div class="container py-5">
   <h2 class="text-center mb-4">Envio de notificaciones</h2>
 

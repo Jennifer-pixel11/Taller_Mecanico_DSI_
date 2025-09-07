@@ -14,7 +14,7 @@ if (isset($_POST['agregar'])) {
     $ruta_final = 'uploads/' . $imagen;
     move_uploaded_file($ruta_temp, $ruta_final);
     $conexion->query("INSERT INTO inventario (nombre, descripcion, cantidad, precio, imagen, id_proveedor) VALUES ('$nombre', '$descripcion', '$cantidad', '$precio', '$ruta_final', '$id_proveedor')");
-    header("Location: InventarioView.php");
+    header("Location: Inventario.php");
     exit;
 }
 
@@ -22,7 +22,7 @@ if (isset($_POST['agregar'])) {
 if (isset($_GET['eliminar'])) {
     $id = $_GET['eliminar'];
     $conexion->query("DELETE FROM inventario WHERE id = $id");
-    header("Location: InventarioView.php");
+    header("Location: Inventario.php");
     exit;
 }
 
@@ -44,7 +44,7 @@ if (isset($_POST['editar'])) {
     } else {
         $conexion->query("UPDATE inventario SET nombre='$nombre', descripcion='$descripcion', cantidad='$cantidad', precio='$precio', id_proveedor='$id_proveedor' WHERE id=$id");
     }
-    header("Location: InventarioView.php");
+    header("Location: Inventario.php");
     exit;
 }
 

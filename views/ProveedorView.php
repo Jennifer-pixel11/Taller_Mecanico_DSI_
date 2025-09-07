@@ -2,14 +2,16 @@
 include '../model/Proveedor.php';
 include '../components/navbar.php';
 ?>
-
+<head>
+  <title>Proveedores</title>
+</head>
 <div class="container py-5">
   <h2 class="text-center mb-4">Gestión de Proveedores</h2>
 
   <!-- Botón para mostrar/ocultar formulario 
     <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#formularioProveedor">+ Agregar Proveedor</button>-->
   <!-- Botón para abrir el modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalProveedor">
+  <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalProveedor">
     Nuevo Proveedor
   </button>
   <!-- Modal -->
