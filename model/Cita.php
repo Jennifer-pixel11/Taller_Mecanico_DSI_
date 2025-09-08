@@ -20,7 +20,7 @@ if (isset($_POST['agendar'])) {
     $servicio = $_POST['servicio'];
     $conexion->query("INSERT INTO citas (cliente, vehiculo, fecha, hora, descripcion, servicio, usuario) 
                       VALUES ('$cliente', '$vehiculo', '$fecha', '$hora', '$descripcion', '$servicio', '$usuario')");
-    header("Location: Cita.php");
+    header("Location: CitaView.php");
     exit;
 }
 
@@ -28,7 +28,7 @@ if (isset($_POST['agendar'])) {
 if (isset($_GET['eliminar'])) {
     $id = $_GET['eliminar'];
     $conexion->query("DELETE FROM citas WHERE id = $id");
-    header("Location: Cita.php");
+    header("Location: CitaView.php");
     exit;
 }
 

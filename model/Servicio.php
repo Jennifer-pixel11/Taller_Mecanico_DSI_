@@ -1,5 +1,7 @@
 <?php
 // model/Servicio.php
+ include("../controller/ServicioController.php"); 
+
 session_start();
 if (!isset($_SESSION['usuario']) || ($_SESSION['rol'] !== 'Gerente' && $_SESSION['rol'] !== 'Mecánico')) {
   header("Location: ../index.html");
@@ -18,7 +20,7 @@ if (isset($_POST['agregar'])) {
     $fecha = $_POST['fecha'];
     $costo = $_POST['costo'];
     $conexion->query("INSERT INTO servicios (vehiculo, descripcion, fecha, costo) VALUES ('$vehiculo', '$descripcion', '$fecha', '$costo')");
-    header("Location: Servicio.php");
+    header("Location: ServicioView.php");
     exit;
 }
 
@@ -26,7 +28,7 @@ if (isset($_POST['agregar'])) {
 if (isset($_GET['eliminar'])) {
     $id = $_GET['eliminar'];
     $conexion->query("DELETE FROM servicios WHERE id = $id");
-    header("Location: Servicio.php");
+    header("Location: ServicioView.php");
     exit;
 }
 
@@ -38,7 +40,7 @@ if (isset($_POST['editar'])) {
     $fecha = $_POST['fecha'];
     $costo = $_POST['costo'];
     $conexion->query("UPDATE servicios SET vehiculo='$vehiculo', descripcion='$descripcion', fecha='$fecha', costo='$costo' WHERE id=$id");
-    header("Location: Servicio.php");
+    header("Location: ServicioView.php");
     exit;
 }
 

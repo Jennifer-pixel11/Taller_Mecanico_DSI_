@@ -67,7 +67,10 @@ include '../components/navbar.php';
           <td><?= $cita['servicio'] ?></td>
           <td><?= $cita['descripcion'] ?></td>
           <td>
-            <a href="?eliminar=<?= $cita['id'] ?>" onclick="return confirm('¿Eliminar esta cita?')" class="btn btn-sm btn-danger">Eliminar</a>
+            <button type="button" class="btn btn-sm btn-warning w-100 m-1" onclick="window.location.href='?editar=<?= $item['id'] ?>'">
+              Editar
+            </button>
+            <a href="?eliminar=<?= $cita['id'] ?>" onclick="return confirm('¿Eliminar esta cita?')" class="btn btn-sm btn-danger w-100 m-1">Eliminar</a>
           </td>
         </tr>
       <?php endwhile; ?>

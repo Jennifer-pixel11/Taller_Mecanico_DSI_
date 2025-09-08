@@ -62,6 +62,7 @@ include '../components/navbar.php';
   </div>
 
   <!-- Tabla -->
+   <div class="table-responsive">
   <table class="table table-bordered table-hover table-light">
     <thead class="table-dark">
       <tr>
@@ -88,10 +89,14 @@ include '../components/navbar.php';
           <td><?= $fila['estado'] ?></td>
           <td><?= $fila['fecha_registro'] ?></td>
           <td>
-            <a href="?eliminar=<?= $fila['id_proveedor'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar proveedor?')">Eliminar</a>
+            <button type="button" class="btn btn-sm btn-warning w-100 m-1" onclick="window.location.href='?editar=<?= $item['id'] ?>'">
+              Editar
+            </button>
+            <a href="?eliminar=<?= $fila['id_proveedor'] ?>" class="btn btn-sm btn-danger w-100 m-1" onclick="return confirm('¿Eliminar proveedor?')">Eliminar</a>
           </td>
         </tr>
       <?php endwhile; ?>
     </tbody>
   </table>
+   </div>
 </div>

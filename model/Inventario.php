@@ -81,6 +81,7 @@ include '../components/navbar.php';
 </div>
 
     <!-- Tabla -->
+     <div class="table-responsive">
     <table class="table table-bordered table-hover table-light">
       <thead class="table-dark">
         <tr>
@@ -107,20 +108,20 @@ include '../components/navbar.php';
           <td>
             <button 
               type="button" 
-              class="btn btn-sm btn-warning" 
+              class="btn btn-sm btn-warning w-100 m-1" 
               data-bs-toggle="modal" 
               data-bs-target="#modalProducto" 
               onclick="window.location.href='?editar=<?= $item['id'] ?>'">
               Editar
             </button>
-            <a href="?eliminar=<?= $item['id'] ?>" onclick="return confirm('¿Eliminar este producto?')" class="btn btn-sm btn-danger">Eliminar</a>
+            <a href="?eliminar=<?= $item['id'] ?>" onclick="return confirm('¿Eliminar este producto?')" class="btn btn-sm btn-danger w-100 m-1">Eliminar</a>
           </td>
         </tr>
         <?php endwhile; ?>
       </tbody>
     </table>
   </div>
-
+  </div>
     <?php if ($editarProducto): ?>
       <script>
         const editarModal = new bootstrap.Modal(document.getElementById('modalProducto'));

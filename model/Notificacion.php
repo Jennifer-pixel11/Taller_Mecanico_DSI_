@@ -11,7 +11,7 @@ if (isset($_POST['agregar'])) {
     $destinatario = $_POST['destinatario'];
     $mensaje = $_POST['mensaje'];
     $conexion->query("INSERT INTO notificaciones (destinatario, mensaje) VALUES ('$destinatario', '$mensaje')");
-    header("Location: Notificacion.php");
+    header("Location: NotificacionView.php");
     exit;
 }
 
@@ -19,7 +19,7 @@ if (isset($_POST['agregar'])) {
 if (isset($_GET['eliminar'])) {
     $id = $_GET['eliminar'];
     $conexion->query("DELETE FROM notificaciones WHERE id = $id");
-    header("Location: Notificacion.php");
+    header("Location: NotificacionView.php");
     exit;
 }
 

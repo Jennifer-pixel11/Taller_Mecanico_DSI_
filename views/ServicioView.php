@@ -1,4 +1,4 @@
-<?php include '../controller/InventarioController.php';
+<?php 
 include '../model/Servicio.php';
 include '../components/navbar.php';
 ?>
@@ -61,8 +61,8 @@ include '../components/navbar.php';
           <td><?= $serv['fecha'] ?></td>
           <td>$<?= number_format($serv['costo'], 2) ?></td>
           <td>
-            <a href="?editar=<?= $serv['id'] ?>" class="btn btn-sm btn-warning">Editar</a>
-            <a href="?eliminar=<?= $serv['id'] ?>" onclick="return confirm('¿Eliminar este servicio?')" class="btn btn-sm btn-danger">Eliminar</a>
+            <a href="?editar=<?= $serv['id'] ?>" class="btn btn-sm btn-warning w-100 m-1">Editar</a>
+            <a href="?eliminar=<?= $serv['id'] ?>" onclick="return confirm('¿Eliminar este servicio?')" class="btn btn-sm btn-danger w-100 m-1">Eliminar</a>
           </td>
         </tr>
       <?php endwhile; ?>

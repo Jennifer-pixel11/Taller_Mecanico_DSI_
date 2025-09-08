@@ -45,7 +45,10 @@ include '../components/navbar.php';
           <td><?= $n['mensaje'] ?></td>
           <td><?= date("d/m/Y H:i", strtotime($n['fecha_envio'])) ?></td>
           <td>
-            <a href="?eliminar=<?= $n['id'] ?>" onclick="return confirm('¿Eliminar esta notificación?')" class="btn btn-sm btn-danger">Eliminar</a>
+            <button type="button" class="btn btn-sm btn-warning w-100 m-1" onclick="window.location.href='?editar=<?= $item['id'] ?>'">
+              Editar
+            </button>
+            <a href="?eliminar=<?= $n['id'] ?>" onclick="return confirm('¿Eliminar esta notificación?')" class="btn btn-sm btn-danger w-100 m-1">Eliminar</a>
           </td>
         </tr>
       <?php endwhile; ?>
