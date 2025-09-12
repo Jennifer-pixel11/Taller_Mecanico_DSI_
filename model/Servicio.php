@@ -1,57 +1,54 @@
 <?php
-// model/Servicio.php
- include("../controller/ServicioController.php"); 
+class Servicio {
+    private $conn;
 
-session_start();
-if (!isset($_SESSION['usuario']) || ($_SESSION['rol'] !== 'Gerente' && $_SESSION['rol'] !== 'Mecánico')) {
-  header("Location: ../index.html");
-  exit;
+    public function __construct() {
+        include_once("Conexion.php");
+        $this->conn = Conexion::conectar();
+    }
+
+    public function agregar($vehiculo_id, $descripcion, $fecha, $costo) {
+        $stmt = $this->conn->prepare(
+            "INSERT INTO servicios (vehiculo_id, descripcion, fecha, costo) VALUES (?, ?, ?, ?)"
+        );
+        $stmt->bind_param("issd", $vehiculo_id, $descripcion, $fecha, $costo);
+        $stmt->execute();
+    }
+
+    // Listar servicios con cliente y vehículo
+    public function obtenerServicios() {
+        $sql = "SELECT s.id,
+                       c.nombre AS cliente,
+                       CONCAT(v.placa, ' - ', v.marca, ' ', v.modelo) AS vehiculo,
+                       s.descripcion, s.fecha, s.costo
+                FROM servicios s
+                INNER JOIN vehiculos v ON s.vehiculo_id = v.id
+                INNER JOIN clientes c ON v.cliente = c.id
+                ORDER BY s.fecha DESC";
+        return $this->conn->query($sql);
+    }
+
+
+    public function obtenerPorId($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM servicios WHERE id=?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    // Editar servicio
+    public function editar($id, $vehiculo_id, $descripcion, $fecha, $costo) {
+        $stmt = $this->conn->prepare(
+            "UPDATE servicios SET vehiculo_id=?, descripcion=?, fecha=?, costo=? WHERE id=?"
+        );
+        $stmt->bind_param("issdi", $vehiculo_id, $descripcion, $fecha, $costo, $id);
+        $stmt->execute();
+    }
+
+    // Eliminar servicio
+    public function eliminar($id) {
+        $stmt = $this->conn->prepare("DELETE FROM servicios WHERE id=?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+    }
 }
-
-$conexion = new mysqli("localhost", "root", "", "taller");
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
-
-// Insertar nuevo servicio
-if (isset($_POST['agregar'])) {
-    $vehiculo = $_POST['vehiculo'];
-    $descripcion = $_POST['descripcion'];
-    $fecha = $_POST['fecha'];
-    $costo = $_POST['costo'];
-    $conexion->query("INSERT INTO servicios (vehiculo, descripcion, fecha, costo) VALUES ('$vehiculo', '$descripcion', '$fecha', '$costo')");
-    header("Location: ServicioView.php");
-    exit;
-}
-
-// Eliminar servicio
-if (isset($_GET['eliminar'])) {
-    $id = $_GET['eliminar'];
-    $conexion->query("DELETE FROM servicios WHERE id = $id");
-    header("Location: ServicioView.php");
-    exit;
-}
-
-// Editar servicio
-if (isset($_POST['editar'])) {
-    $id = $_POST['id'];
-    $vehiculo = $_POST['vehiculo'];
-    $descripcion = $_POST['descripcion'];
-    $fecha = $_POST['fecha'];
-    $costo = $_POST['costo'];
-    $conexion->query("UPDATE servicios SET vehiculo='$vehiculo', descripcion='$descripcion', fecha='$fecha', costo='$costo' WHERE id=$id");
-    header("Location: ServicioView.php");
-    exit;
-}
-
-// Obtener para editar
-$editar = null;
-if (isset($_GET['editar'])) {
-    $id = $_GET['editar'];
-    $resultado = $conexion->query("SELECT * FROM servicios WHERE id = $id");
-    $editar = $resultado->fetch_assoc();
-}
-
-// Obtener lista
-$servicios = $conexion->query("SELECT * FROM servicios");
-?>

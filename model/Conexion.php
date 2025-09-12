@@ -1,13 +1,16 @@
 <?php
-$host = "localhost";
-$user = "root";
-$password = "";
-$db = "taller";
+class Conexion {
+    public static function conectar() {
+        $host = "localhost";
+        $user = "root";
+        $pass = "";
+        $db   = "taller";
 
-$conn = new mysqli($host, $user, $password, $db);
+        $conn = new mysqli($host, $user, $pass, $db);
 
-// Habilita errores si la conexión falla
-if ($conn->connect_error) {
-  die("<script>alert('Error de conexión a la base de datos: " . $conn->connect_error . "');window.location.href='../index.html';</script>");
+        if ($conn->connect_error) {
+            die("Error de conexión: " . $conn->connect_error);
+        }
+        return $conn;
+    }
 }
-?>

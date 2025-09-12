@@ -1,31 +1,40 @@
 <?php
-// controller/ProveedorController.php
+require_once("../model/Servicio.php");
 
-$conexion = new mysqli("localhost", "root", "", "taller");
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
+$servicioModel = new Servicio();
 
-// Agregar 
-if (isset($_POST['agregarServicio'])) {
-    $vehiculo = $_POST['vehiculo'];
+// Guardar servicio nuevo (manual)
+if (isset($_POST['guardar'])) {
+    $vehiculo_id = $_POST['vehiculo_id'];
     $descripcion = $_POST['descripcion'];
-    $fecha = $_POST['fecha'];
-    $costo = $_POST['costo'];
+    $fecha       = $_POST['fecha'];
+    $costo       = $_POST['costo'];
 
-    $conexion->query("INSERT INTO servicios (vehiculo, descripcion, fecha, costo) 
-                      VALUES ('$vehiculo', '$descripcion', '$fecha', '$costo')");
-    header("Location: ProveedorView.php");
+    $servicioModel->agregar($vehiculo_id, $descripcion, $fecha, $costo);
+
+    header("Location: ../views/ServicioView.php?msg=Servicio registrado");
     exit;
 }
 
-// Eliminar proveedor
+// Editar servicio
+if (isset($_POST['editar'])) {
+    $id          = $_POST['id'];
+    $vehiculo_id = $_POST['vehiculo_id'];
+    $descripcion = $_POST['descripcion'];
+    $fecha       = $_POST['fecha'];
+    $costo       = $_POST['costo'];
+
+    $servicioModel->editar($id, $vehiculo_id, $descripcion, $fecha, $costo);
+
+    header("Location: ../views/ServicioView.php?msg=Servicio actualizado");
+    exit;
+}
+
+// Eliminar servicio
 if (isset($_GET['eliminar'])) {
-    $id = $_GET['eliminar'];
-    $conexion->query("DELETE FROM proveedor_insumos WHERE id_proveedor = $id");
-    header("Location: ProveedorView.php");
+    $id = intval($_GET['eliminar']);
+    $servicioModel->eliminar($id);
+
+    header("Location: ../views/ServicioView.php?msg=Servicio eliminado");
     exit;
 }
-
-// Obtener proveedores
-$resultado = $conexion->query("SELECT * FROM proveedor_insumos");

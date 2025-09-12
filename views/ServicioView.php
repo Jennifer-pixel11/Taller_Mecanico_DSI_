@@ -1,50 +1,88 @@
-<?php 
-include '../model/Servicio.php';
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+require_once '../model/Servicio.php';
+require_once '../model/Conexion.php';
+
+$servicioModel = new Servicio();
+$servicios = $servicioModel->obtenerServicios();
+
+$servicioEditar = null;
+if (isset($_GET['editar'])) {
+    $servicioEditar = $servicioModel->obtenerPorId($_GET['editar']);
+}
+
+$conn = Conexion::conectar();
+
 include '../components/navbar.php';
 ?>
 <head>
   <title>Servicios</title>
 </head>
-
 <div class="container py-5">
-  <h2 class="text-center mb-4">Registro de Servicios</h2>
+  <h2 class="text-center mb-4"><?= $servicioEditar ? "Editar Servicio" : "Registrar Servicio" ?></h2>
 
   <!-- Formulario -->
   <div class="card mb-4">
-    <div class="card-header"><?= $editar ? "Editar Servicio" : "Agregar Servicio" ?></div>
+    <div class="card-header"><?= $servicioEditar ? "Editar Servicio" : "Nuevo Servicio" ?></div>
     <div class="card-body">
-      <form method="post">
-        <?php if ($editar): ?>
-          <input type="hidden" name="id" value="<?= $editar['id'] ?>">
-        <?php endif; ?>
+      <form method="post" action="../controller/ServicioController.php">
+        <input type="hidden" name="id" value="<?= $servicioEditar['id'] ?? '' ?>">
+
+        <!-- Vehículo -->
         <div class="mb-3">
           <label class="form-label">Vehículo</label>
-          <input type="text" name="vehiculo" class="form-control" value="<?= $editar['vehiculo'] ?? '' ?>" required>
+          <select name="vehiculo_id" class="form-select" required>
+            <option value="">Seleccione un vehículo</option>
+            <?php
+            $sql = "SELECT v.id, CONCAT(v.placa, ' - ', v.marca, ' ', v.modelo) AS vehiculo, c.nombre AS cliente
+                    FROM vehiculos v
+                    INNER JOIN clientes c ON v.cliente = c.id";
+            $result = $conn->query($sql);
+            while ($row = $result->fetch_assoc()) {
+                $selected = ($servicioEditar && $servicioEditar['vehiculo_id'] == $row['id']) ? "selected" : "";
+                echo "<option value='".$row['id']."' $selected>".$row['vehiculo']." (".$row['cliente'].")</option>";
+            }
+            ?>
+          </select>
         </div>
+
+        <!-- Descripción -->
         <div class="mb-3">
           <label class="form-label">Descripción</label>
-          <textarea name="descripcion" class="form-control" required><?= $editar['descripcion'] ?? '' ?></textarea>
+          <textarea name="descripcion" class="form-control" rows="3" required><?= $servicioEditar['descripcion'] ?? '' ?></textarea>
         </div>
+
+        <!-- Fecha -->
         <div class="mb-3">
           <label class="form-label">Fecha</label>
-          <input type="date" name="fecha" class="form-control" value="<?= $editar['fecha'] ?? '' ?>" required>
+          <input type="date" name="fecha" class="form-control"
+                 value="<?= $servicioEditar['fecha'] ?? '' ?>" required>
         </div>
+
+        <!-- Costo -->
         <div class="mb-3">
           <label class="form-label">Costo</label>
-          <input type="number" step="0.01" name="costo" class="form-control" value="<?= $editar['costo'] ?? '' ?>" required>
+          <input type="number" step="0.01" name="costo" class="form-control"
+                 value="<?= $servicioEditar['costo'] ?? '' ?>" required>
         </div>
-        <button type="submit" name="<?= $editar ? 'editar' : 'agregar' ?>" class="btn btn-success">
-          <?= $editar ? 'Actualizar' : 'Guardar' ?>
-        </button>
+
+        <?php if ($servicioEditar): ?>
+          <button type="submit" name="editar" class="btn btn-warning">Actualizar Servicio</button>
+          <a href="ServicioView.php" class="btn btn-secondary">Cancelar</a>
+        <?php else: ?>
+          <button type="submit" name="guardar" class="btn btn-success">Guardar Servicio</button>
+        <?php endif; ?>
       </form>
     </div>
   </div>
 
-  <!-- Tabla -->
+  <!-- Tabla de Servicios -->
   <table class="table table-bordered table-hover table-light">
     <thead class="table-dark">
       <tr>
         <th>ID</th>
+        <th>Cliente</th>
         <th>Vehículo</th>
         <th>Descripción</th>
         <th>Fecha</th>
@@ -53,16 +91,26 @@ include '../components/navbar.php';
       </tr>
     </thead>
     <tbody>
-      <?php while ($serv = $servicios->fetch_assoc()): ?>
+      <?php while ($servicio = $servicios->fetch_assoc()): ?>
         <tr>
-          <td><?= $serv['id'] ?></td>
-          <td><?= $serv['vehiculo'] ?></td>
-          <td><?= $serv['descripcion'] ?></td>
-          <td><?= $serv['fecha'] ?></td>
-          <td>$<?= number_format($serv['costo'], 2) ?></td>
+          <td><?= $servicio['id'] ?></td>
+          <td><?= $servicio['cliente'] ?></td>
+          <td><?= $servicio['vehiculo'] ?></td>
+          <td><?= $servicio['descripcion'] ?></td>
+          <td><?= $servicio['fecha'] ?></td>
+          <td>$<?= number_format($servicio['costo'], 2) ?></td>
           <td>
-            <a href="?editar=<?= $serv['id'] ?>" class="btn btn-sm btn-warning w-100 m-1">Editar</a>
-            <a href="?eliminar=<?= $serv['id'] ?>" onclick="return confirm('¿Eliminar este servicio?')" class="btn btn-sm btn-danger w-100 m-1">Eliminar</a>
+           <!-- generar el comprobante-->
+            <a href="../controller/ComprobanteController.php?generar=<?= $servicio['id'] ?>&total=<?= $servicio['costo'] ?>" 
+               class="btn btn-sm btn-info w-100 m-1">Generar Comprobante</a>
+
+            <!-- Editar -->
+            <a href="?editar=<?= $servicio['id'] ?>" class="btn btn-sm btn-warning w-100 m-1">Editar</a>
+
+            <!-- Eliminar -->
+            <a href="../controller/ServicioController.php?eliminar=<?= $servicio['id'] ?>" 
+               onclick="return confirm('¿Eliminar este servicio?')" 
+               class="btn btn-sm btn-danger w-100 m-1">Eliminar</a>
           </td>
         </tr>
       <?php endwhile; ?>

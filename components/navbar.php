@@ -22,10 +22,12 @@
         <div class="collapse navbar-collapse" id="menuExpandible">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/main.php">INICIO</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/model/Inventario.php">INVENTARIO</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/ClienteView.php">CLIENTES</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/VehiculoView.php">VEHÍCULOS</a></li>
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/ServicioView.php">SERVICIOS</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/ProveedorView.php">PROVEEDORES</a></li>
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/CitaView.php">CITAS</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/model/Inventario.php">INVENTARIO</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/ProveedorView.php">PROVEEDORES</a></li>
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/NotificacionView.php">NOTIFICACIONES</a></li>
           </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

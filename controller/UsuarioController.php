@@ -2,6 +2,9 @@
 require_once '../model/Conexion.php';
 session_start();
 
+// Conexión
+$conn = Conexion::conectar();
+
 // Cierre de sesión
 if (isset($_GET['accion']) && $_GET['accion'] === 'logout') {
     session_unset();
