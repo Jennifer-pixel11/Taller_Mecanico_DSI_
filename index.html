@@ -6,64 +6,181 @@
   <title>Sistema Taller Mecánico</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="icon" href="public/logotipo.png" type="image/png">
-  <!-- <link rel="stylesheet" href="public/styles.css">-->
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Panel azul */
+    .left-panel {
+      flex: 1;
+      background-color: #0d1b4c;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+    }
+    .left-panel h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      z-index: 1;
+      text-align: center;
+    }
+    .left-logo img {
+      width: 140px;
+      z-index: 1;
+    }
+
+    /* Círculos decorativos */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      z-index: 0;
+    }
+    .circle.small { width: 60px; height: 60px; top: 20%; left: 15%; }
+    .circle.medium { width: 120px; height: 120px; bottom: 20%; right: 10%; }
+    .circle.large { width: 200px; height: 200px; top: -80px; right: -80px; }
+
+    /* Panel blanco */
+    .right-panel {
+      flex: 1;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column; /* texto arriba + card debajo */
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .welcome-title {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      color: #0d1b4c;
+      text-align: center;
+    }
+    .login-card {
+      width: 350px;
+    }
+    .login-card h3 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: bold;
+      color: #0d1b4c;
+    }
+    .btn-primary {
+      background-color: #0d1b4c;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #142a6e;
+    }
+    .extra-links {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    .extra-links a {
+      color: #0d1b4c;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .extra-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* 🔹 Responsive: panel azul como banner */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .left-panel {
+        flex: none;
+        width: 100%;
+        height: auto;
+        padding: 1.5rem;
+      }
+      .left-panel h1 {
+        font-size: 1.5rem;
+      }
+      .left-logo img {
+        width: 90px;
+        margin-top: 0.5rem;
+      }
+      .circle { display: none; }
+      .right-panel {
+        flex: none;
+        width: 100%;
+        height: auto;
+        padding: 2rem 0;
+      }
+      .login-card {
+        width: 90%;
+        max-width: 400px;
+      }
+    }
+  </style>
 </head>
-<body class="bg-primary d-flex align-items-center justify-content-center vh-100">
+<body>
 
-  <div class="card p-4 shadow-lg" style="width: 350px">
-    <div class="text-center">
-      <img src="public/logotipo.png" alt="Logo" width="100">
+  <!-- Panel azul -->
+  <div class="left-panel">
+    <div class="circle small"></div>
+    <div class="circle medium"></div>
+    <div class="circle large"></div>
+
+    <h1>MECANICA EXPERT</h1>
+    <div class="left-logo">
+      <img src="public/logotipo.png" alt="Logo Taller Mecánico">
     </div>
+  </div>
 
-    <!-- Formulario de inicio de sesión -->
-    <form id="login-form" method="POST" action="controller/UsuarioController.php" autocomplete="off">
-      <input type="hidden" name="accion" value="login">
-      <div class="mb-3">
-        <label for="usuario" class="form-label">Usuario</label>
-        <input type="text" class="form-control" name="usuario" required autocomplete="off">
+  <!-- Panel blanco -->
+  <div class="right-panel">
+    <div class="welcome-title">Bienvenido</div>
+    <div class="card p-4 shadow login-card">
+      <h3>Iniciar Sesión</h3>
+      <form id="login-form" method="POST" action="controller/UsuarioController.php" autocomplete="off">
+        <input type="hidden" name="accion" value="login">
+        <div class="mb-3">
+          <label for="usuario" class="form-label">Usuario</label>
+          <input type="text" class="form-control" name="usuario" required>
+        </div>
+        <div class="mb-3">
+          <label for="clave" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" name="clave" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+      </form>
+      <div class="extra-links">
+        <a href="#">¿Olvidaste tu contraseña?</a><br>
+        ¿No tienes cuenta? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Crear cuenta</a>
       </div>
-      <div class="mb-3">
-        <label for="clave" class="form-label">Contraseña</label>
-        <input type="password" class="form-control" name="clave" required autocomplete="new-password">
-      </div>
-      <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
-    </form>
-
-    <hr>
-
-    <!-- Botón para abrir el modal de registro -->
-    <button type="button" class="btn btn-light w-100" data-bs-toggle="modal" data-bs-target="#registerModal">
-      Agregar cuenta
-    </button>
+    </div>
   </div>
 
   <!-- Modal de registro -->
-  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <form id="register-form" method="POST" action="controller/UsuarioController.php" autocomplete="off">
+        <form id="register-form" method="POST" action="controller/UsuarioController.php">
           <input type="hidden" name="accion" value="register">
           <div class="modal-header">
-            <h5 class="modal-title" id="registerModalLabel">Registrar nueva cuenta</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            <h5 class="modal-title">Registrar nueva cuenta</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            <div class="mb-3">
-              <label for="usuario" class="form-label">Nombre Usuario</label>
-              <input type="text" class="form-control" name="usuario" required autocomplete="off">
-            </div>
-            <div class="mb-3">
-              <label for="clave" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" name="clave" required autocomplete="new-password">
-            </div>
-            <div class="mb-3">
-              <label for="correo" class="form-label">email</label>
-              <input type="email" class="form-control" name="correo" required autocomplete="off">
-            </div>
-            <div class="mb-3">
-              <label for="telefono" class="form-label">telefono </label>
-              <input type="text" class="form-control" name="telefono" required autocomplete="off">
-            </div>
+            <input type="text" class="form-control mb-2" name="usuario" placeholder="Usuario" required>
+            <input type="password" class="form-control mb-2" name="clave" placeholder="Contraseña" required>
+            <input type="email" class="form-control mb-2" name="correo" placeholder="Email" required>
+            <input type="text" class="form-control mb-2" name="telefono" placeholder="Teléfono" required>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -78,4 +195,3 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
