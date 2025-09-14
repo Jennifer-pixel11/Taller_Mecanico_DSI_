@@ -7,3 +7,49 @@ body {
   color: black;
   border-radius: 15px;
 }
+
+/* Fondo degradado animado */
+.premium-bg {
+  background: linear-gradient(135deg, #0d6efd, #6c63ff, #20c997, #6610f2);
+  background-size: 400% 400%;
+  animation: gradientMove 20s ease infinite;
+  overflow: hidden;
+  position: relative;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Formas circulares difuminadas */
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.6;
+  z-index: 1;
+  animation: float 12s infinite alternate;
+}
+
+.circle1 {
+  width: 400px; height: 400px;
+  background: #6c63ff;
+  top: -100px; left: -150px;
+}
+.circle2 {
+  width: 350px; height: 350px;
+  background: #20c997;
+  bottom: -120px; right: -100px;
+}
+.circle3 {
+  width: 250px; height: 250px;
+  background: #ffc107;
+  top: 40%; left: 65%;
+}  
+
+@keyframes float {
+  from { transform: translateY(0) scale(1); }
+  to { transform: translateY(-40px) scale(1.1); }
+}
