@@ -1,5 +1,5 @@
-<?php include("../controller/ProveedorController.php");
-include '../model/Proveedor.php';
+<?php 
+include("../controller/ProveedorController.php");
 include '../components/navbar.php';
 ?>
 <head>
@@ -18,45 +18,54 @@ include '../components/navbar.php';
   <div class="modal fade" id="modalProveedor" tabindex="-1" aria-labelledby="modalProveedorLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-
         <div class="modal-header">
-          <h5 class="modal-title" id="modalProveedorLabel">Nuevo Proveedor</h5>
+          <h5 class="modal-title" id="modalProveedorLabel"><?= isset($editarProveedor) ? 'Editar Proveedor' : 'Nuevo Proveedor' ?></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
-
         <div class="modal-body">
-          <form method="post">
+            <form method="post" enctype="multipart/form-data">
+            <?php if (isset($editarProveedor)): ?>
+              <input type="hidden" name="id" value="<?= $editarProveedor['id_proveedor'] ?>">
+            <?php endif; ?>
+
             <div class="mb-3">
               <label class="form-label">Nombre del Proveedor</label>
-              <input type="text" name="nombre" class="form-control" required>
+              <input type="text" name="nombre" class="form-control" value="<?= $editarProveedor['nombre'] ?? '' ?>" required>
             </div>
+
             <div class="mb-3">
               <label class="form-label">Nombre de contacto</label>
-              <input type="text" name="nombre_contacto" class="form-control" required>
+              <input type="text" name="nombre_contacto" class="form-control" value="<?= $editarProveedor['nombre_contacto'] ?? '' ?>" required>
             </div>
+
             <div class="mb-3">
               <label class="form-label">Teléfono</label>
-              <input type="text" name="telefono" class="form-control" required>
+              <input type="text" name="telefono" class="form-control" value="<?= $editarProveedor['telefono'] ?? '' ?>" required>
             </div>
+
             <div class="mb-3">
               <label class="form-label">Correo electrónico</label>
-              <input type="email" name="correo_electronico" class="form-control" required>
+              <input type="email" name="correo_electronico" class="form-control" value="<?= $editarProveedor['correo_electronico'] ?? '' ?>" required>
             </div>
+
             <div class="mb-3">
               <label class="form-label">Dirección</label>
-              <input type="text" name="direccion" class="form-control" required>
+              <input type="text" name="direccion" class="form-control" value="<?= $editarProveedor['direccion'] ?? '' ?>" required>
             </div>
+
             <div class="mb-3">
               <label class="form-label">Rubro</label>
-              <input type="text" name="rubro" class="form-control" required>
+              <input type="text" name="rubro" class="form-control" value="<?= $editarProveedor['rubro'] ?? '' ?>" required>
             </div>
+
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" name="agregarProveedor" class="btn btn-success">Guardar</button>
+              <button type="submit" name="<?= isset($editarProveedor) ? 'editarProveedor' : 'agregarProveedor' ?>" class="btn btn-success">
+                <?= isset($editarProveedor) ? 'Actualizar' : 'Guardar' ?>
+              </button>
             </div>
           </form>
         </div>
-
       </div>
     </div>
   </div>
@@ -78,20 +87,26 @@ include '../components/navbar.php';
       </tr>
     </thead>
     <tbody>
-      <?php while ($fila = $resultado->fetch_assoc()): ?>
+      <?php while ($item = $resultado->fetch_assoc()): ?>
         <tr>
-          <td><?= $fila['nombre'] ?></td>
-          <td><?= $fila['nombre_contacto'] ?></td>
-          <td><?= $fila['telefono'] ?></td>
-          <td><?= $fila['correo_electronico'] ?></td>
-          <td><?= $fila['direccion'] ?></td>
-          <td><?= $fila['rubro'] ?></td>
-          <td><?= $fila['estado'] ?></td>
-          <td><?= $fila['fecha_registro'] ?></td>
+          <td><?= $item['nombre'] ?></td>
+          <td><?= $item['nombre_contacto'] ?></td>
+          <td><?= $item['telefono'] ?></td>
+          <td><?= $item['correo_electronico'] ?></td>
+          <td><?= $item['direccion'] ?></td>
+          <td><?= $item['rubro'] ?></td>
+          <td><?= $item['estado'] ?></td>
+          <td><?= $item['fecha_registro'] ?></td>
           <td>
-            <button type="button" class="btn btn-sm btn-warning w-100 m-1" onclick="window.location.href='?editar=<?= $item['id'] ?>'">
-              Editar
-            </button>
+             <!-- Botón para editar proveedor -->
+              <button 
+                type="button" 
+                class="btn btn-sm btn-warning w-100 m-1" 
+                data-bs-toggle="modal" 
+                data-bs-target="#modalProveedor" 
+                onclick="window.location.href='?editar=<?= $item['id_proveedor'] ?>'">
+                Editar
+              </button>
             <a href="?eliminar=<?= $fila['id_proveedor'] ?>" class="btn btn-sm btn-danger w-100 m-1" onclick="return confirm('¿Eliminar proveedor?')">Eliminar</a>
           </td>
         </tr>
@@ -100,3 +115,11 @@ include '../components/navbar.php';
   </table>
    </div>
 </div>
+
+<!-- Mostrar modal si estamos en modo edición -->
+<?php if (isset($editarProveedor)): ?>
+  <script>
+    const editarModal = new bootstrap.Modal(document.getElementById('modalProveedor'));
+    window.addEventListener('load', () => editarModal.show());
+  </script>
+<?php endif; ?>
