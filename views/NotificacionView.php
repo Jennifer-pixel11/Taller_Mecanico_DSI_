@@ -14,11 +14,11 @@ include '../components/navbar.php';
     <div class="card-body">
       <form method="post">
         <div class="mb-3">
-          <label class="form-label">Destinatario</label>
+          <label class="form-label">Destinatario<span class="text-danger"> * </span></label>
           <input type="text" name="destinatario" class="form-control" required>
         </div>
         <div class="mb-3">
-          <label class="form-label">Mensaje</label>
+          <label class="form-label">Mensaje<span class="text-danger"> * </span></label>
           <textarea name="mensaje" class="form-control" rows="3" required></textarea>
         </div>
         <button type="submit" name="agregar" class="btn btn-success">Enviar</button>

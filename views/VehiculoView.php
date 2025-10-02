@@ -27,17 +27,18 @@ $conn = Conexion::conectar();
   <div class="card mb-4">
     <div class="card-header"><?= $vehiculoEditar ? "Editar Vehículo" : "Nuevo Vehículo" ?></div>
     <div class="card-body">
-      <form method="post" action="../controller/VehiculoController.php">
+      <form method="post" action="../controller/VehiculoController.php" >
         <input type="hidden" name="id" value="<?= $vehiculoEditar['id'] ?? '' ?>">
 
         <div class="mb-3">
-          <label class="form-label">Placa</label>
-          <input type="text" name="placa" class="form-control" 
+          <label class="form-label">Ingresa la Placa del vehiculo: <span class="text-danger"> * </span> </label>
+          <input type="text" id="placa" name="placa" placeholder="P123456 o P-123456" class="form-control" 
                  value="<?= $vehiculoEditar['placa'] ?? '' ?>" required>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label">Cliente</label>
+          <label class="form-label">Cliente <span class="text-danger"> * </span> </label>
           <select name="cliente" class="form-select" required>
             <option value="">Seleccione un cliente</option>
             <?php
@@ -52,15 +53,17 @@ $conn = Conexion::conectar();
         </div>
 
         <div class="mb-3">
-          <label class="form-label">Marca</label>
-          <input type="text" name="marca" class="form-control" 
+          <label class="form-label">Ingresa la Marca: <span class="text-danger"> * </span> </label>
+          <input type="text" id="marca" name="marca" placeholder="Toyota, Nissan, Hyundai..." class="form-control" 
                  value="<?= $vehiculoEditar['marca'] ?? '' ?>" required>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label">Modelo</label>
-          <input type="text" name="modelo" class="form-control" 
+          <label class="form-label">Ingresa el Modelo: <span class="text-danger"> * </span></label>
+          <input type="text" id="linea" name="modelo"  placeholder="Corolla, Civic, Escape, Hilux..." class="form-control" 
                  value="<?= $vehiculoEditar['modelo'] ?? '' ?>" required>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <?php if ($vehiculoEditar): ?>
@@ -104,3 +107,5 @@ $conn = Conexion::conectar();
     </tbody>
   </table>
 </div>
+
+<script src="../static/js/validacionVehiculo.js"></script>

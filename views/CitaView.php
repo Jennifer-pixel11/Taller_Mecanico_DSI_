@@ -31,7 +31,7 @@ include '../components/navbar.php';
 
         <!-- Cliente -->
         <div class="mb-3">
-          <label class="form-label">Cliente</label>
+          <label class="form-label">Cliente que agendará cita: <span class="text-danger"> * </span></label>
           <select name="cliente_id" class="form-select" required>
             <option value="">Seleccione un cliente</option>
             <?php
@@ -47,7 +47,7 @@ include '../components/navbar.php';
 
         <!-- Vehículo -->
         <div class="mb-3">
-          <label class="form-label">Vehículo</label>
+          <label class="form-label">Vehículo asignado: <span class="text-danger"> * </span></label>
           <select name="vehiculo_id" class="form-select" required>
             <option value="">Seleccione un vehículo</option>
             <?php
@@ -65,7 +65,7 @@ include '../components/navbar.php';
 
         <!-- Servicio -->
         <div class="mb-3">
-          <label class="form-label">Servicio</label>
+          <label class="form-label">Servicio a realizar: <span class="text-danger"> * </span></label>
           <select name="servicio_id" class="form-select" required>
             <option value="">Seleccione un servicio</option>
             <?php
@@ -81,22 +81,22 @@ include '../components/navbar.php';
 
         <!-- Fecha -->
         <div class="mb-3">
-          <label class="form-label">Fecha</label>
+          <label class="form-label">Fecha de cita: <span class="text-danger"> * </span></label>
           <input type="date" name="fecha" class="form-control"
                  value="<?= $citaEditar['fecha'] ?? '' ?>" required>
         </div>
 
         <!-- Hora -->
         <div class="mb-3">
-          <label class="form-label">Hora</label>
+          <label class="form-label">Hora ded cita: <span class="text-danger"> * </span></label>
           <input type="time" name="hora" class="form-control"
                  value="<?= $citaEditar['hora'] ?? '' ?>" required>
         </div>
 
         <!-- Descripción -->
         <div class="mb-3">
-          <label class="form-label">Descripción</label>
-          <textarea name="descripcion" class="form-control" rows="3" required><?= $citaEditar['descripcion'] ?? '' ?></textarea>
+          <label class="form-label">Descripción del servicio: <span class="text-danger"> * </span></label>
+          <textarea name="descripcion"  placeholder="Servicio de mantenimiento preventivo,..." class="form-control" rows="3" required><?= $citaEditar['descripcion'] ?? '' ?></textarea>
         </div>
 
         <?php if ($citaEditar): ?>

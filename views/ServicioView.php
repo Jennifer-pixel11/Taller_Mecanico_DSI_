@@ -31,7 +31,7 @@ include '../components/navbar.php';
 
         <!-- Vehículo -->
         <div class="mb-3">
-          <label class="form-label">Vehículo</label>
+          <label class="form-label">Vehículo<span class="text-danger"> * </span></label>
           <select name="vehiculo_id" class="form-select" required>
             <option value="">Seleccione un vehículo</option>
             <?php
@@ -49,21 +49,21 @@ include '../components/navbar.php';
 
         <!-- Descripción -->
         <div class="mb-3">
-          <label class="form-label">Descripción</label>
-          <textarea name="descripcion" class="form-control" rows="3" required><?= $servicioEditar['descripcion'] ?? '' ?></textarea>
+          <label class="form-label">Ingresa una Descripción del servicio que se brindará: <span class="text-danger"> * </span></label>
+          <textarea name="descripcion" placeholder="Servicio de mantenimiento preventivo,..." class="form-control" rows="3" required><?= $servicioEditar['descripcion'] ?? '' ?></textarea>
         </div>
 
         <!-- Fecha -->
         <div class="mb-3">
-          <label class="form-label">Fecha</label>
+          <label class="form-label">Fecha<span class="text-danger"> * </span></label>
           <input type="date" name="fecha" class="form-control"
                  value="<?= $servicioEditar['fecha'] ?? '' ?>" required>
         </div>
 
         <!-- Costo -->
         <div class="mb-3">
-          <label class="form-label">Costo</label>
-          <input type="number" step="0.01" name="costo" class="form-control"
+          <label class="form-label">Ingresa el Costo Total del servicio: <span class="text-danger"> * </span></label>
+          <input type="number" step="0.01" name="costo" placeholder="$00.00 " class="form-control"
                  value="<?= $servicioEditar['costo'] ?? '' ?>" required>
         </div>
 

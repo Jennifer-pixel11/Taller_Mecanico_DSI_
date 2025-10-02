@@ -29,33 +29,33 @@ include '../components/navbar.php';
             <?php endif; ?>
 
             <div class="mb-3">
-              <label class="form-label">Nombre del Proveedor</label>
-              <input type="text" name="nombre" class="form-control" value="<?= $editarProveedor['nombre'] ?? '' ?>" required>
+              <label class="form-label">Nombre del Proveedor:<span class="text-danger"> * </span></label>
+              <input type="text" name="nombre" placeholder="Empresa Repuestos" class="form-control" value="<?= $editarProveedor['nombre'] ?? '' ?>" required>
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Nombre de contacto</label>
-              <input type="text" name="nombre_contacto" class="form-control" value="<?= $editarProveedor['nombre_contacto'] ?? '' ?>" required>
+              <label class="form-label">Nombre de contacto:<span class="text-danger"> * </span></label>
+              <input type="text" name="nombre_contacto" placeholder="Fulanito Mengano" class="form-control" value="<?= $editarProveedor['nombre_contacto'] ?? '' ?>" required>
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Teléfono</label>
-              <input type="text" name="telefono" class="form-control" value="<?= $editarProveedor['telefono'] ?? '' ?>" required>
+              <label class="form-label">Teléfono:<span class="text-danger"> * </span></label>
+              <input type="text" name="telefono" placeholder="xxxx xxxx" class="form-control" value="<?= $editarProveedor['telefono'] ?? '' ?>" required>
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Correo electrónico</label>
-              <input type="email" name="correo_electronico" class="form-control" value="<?= $editarProveedor['correo_electronico'] ?? '' ?>" required>
+              <label class="form-label">Correo electrónico:<span class="text-danger"> * </span></label>
+              <input type="email" name="correo_electronico" placeholder="usuario@example.com" class="form-control" value="<?= $editarProveedor['correo_electronico'] ?? '' ?>" required>
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Dirección</label>
-              <input type="text" name="direccion" class="form-control" value="<?= $editarProveedor['direccion'] ?? '' ?>" required>
+              <label class="form-label">Dirección:<span class="text-danger"> * </span></label>
+              <input type="text" name="direccion" class="form-control" placeholder="Av. Siempre Viva 742"  value="<?= $editarProveedor['direccion'] ?? '' ?>" required>
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Rubro</label>
-              <input type="text" name="rubro" class="form-control" value="<?= $editarProveedor['rubro'] ?? '' ?>" required>
+              <label class="form-label">Rubro:<span class="text-danger"> * </span></label>
+              <input type="text" name="rubro" placeholder="repuestos, etc."  class="form-control" value="<?= $editarProveedor['rubro'] ?? '' ?>" required>
             </div>
 
             <div class="modal-footer">

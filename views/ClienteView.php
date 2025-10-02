@@ -22,27 +22,30 @@ include '../components/navbar.php';
   <div class="card mb-4">
     <div class="card-header"><?= $clienteEditar ? "Editar Cliente" : "Nuevo Cliente" ?></div>
     <div class="card-body">
-      <form method="post" action="../controller/ClienteController.php">
+      <form method="post" action="../controller/ClienteController.php" novalidate>
         <input type="hidden" name="id" value="<?= $clienteEditar['id'] ?? '' ?>">
-
         <div class="mb-3">
-          <label class="form-label">Nombre</label>
-          <input type="text" name="nombre" class="form-control" 
+          <label class="form-label">Ingresa el Nombre completo del cliente: <span class="text-danger"> * </span></label>
+          <input type="text" id="nombre"  name="nombre" placeholder="Fulanito Mengano " class="form-control" 
                  value="<?= $clienteEditar['nombre'] ?? '' ?>" required>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Teléfono</label>
-          <input type="text" name="telefono" class="form-control" 
+          <label class="form-label">Ingresa el numero de Telefono del cliente: <span class="text-danger"> * </span></label>
+          <input type="text" id="telefono" name="telefono" placeholder="xxxx xxxx " class="form-control" 
                  value="<?= $clienteEditar['telefono'] ?? '' ?>">
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Correo</label>
-          <input type="email" name="correo" class="form-control" 
+          <label class="form-label">Ingresa la dirección e-mail del cliente: <span class="text-danger"> * </span></label>
+          <input type="email" id="correo" name="correo" placeholder="usuario@example.com" class="form-control" 
                  value="<?= $clienteEditar['correo'] ?? '' ?>" required>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Dirección</label>
-          <textarea name="direccion" class="form-control" rows="2"><?= $clienteEditar['direccion'] ?? '' ?></textarea>
+          <label class="form-label">Ingresa la ubicación completa y actual del cliente: <span class="text-danger"> * </span></label>
+          <textarea id="direccion" name="direccion" placeholder="Av. Siempre Viva 742" class="form-control" rows="2"><?= $clienteEditar['direccion'] ?? '' ?></textarea>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <?php if ($clienteEditar): ?>
@@ -86,3 +89,5 @@ include '../components/navbar.php';
     </tbody>
   </table>
 </div>
+<script src="../static/js/validacionCliente.js"></script>
+
