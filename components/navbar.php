@@ -26,12 +26,12 @@
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/VehiculoView.php">VEHÍCULOS</a></li>
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/ServicioView.php">SERVICIOS</a></li>
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/CitaView.php">CITAS</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/model/Inventario.php">INVENTARIO</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/InventarioView.php">INVENTARIO</a></li>
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/ProveedorView.php">PROVEEDORES</a></li>
             <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/NotificacionView.php">NOTIFICACIONES</a></li>
           </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a href="controller/UsuarioController.php?accion=logout" class="btn btn-danger">Cerrar sesión</a></li>
+            <li class="nav-item"><a href="/Taller_Mecanico_DSI_/controller/UsuarioController.php?accion=logout" class="btn btn-danger">Cerrar sesión</a></li>
           </ul>
          <!--  <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Buscar">
