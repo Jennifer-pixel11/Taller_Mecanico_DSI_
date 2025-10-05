@@ -31,7 +31,9 @@ $hora = date("d/m/Y H:i:s");
         <p class="mb-0">Rol: <strong><?= htmlspecialchars($rol) ?></strong> | Hora actual: <?= $hora ?></p>
         </ul>
         
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0"></ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a href="controller/UsuarioController.php?accion=logout" class="btn btn-danger">Cerrar sesión</a></li>
+          </ul>
       </div>
     </div>
 
@@ -88,7 +90,7 @@ $hora = date("d/m/Y H:i:s");
             <div class="card-body">
               <img src="public/inventario.png" alt="Inventario" class="img-fluid">
               <h5 class="card-title">Inventario</h5>
-              <a href="/Taller_Mecanico_DSI_/model/Inventario.php" class="btn btn-outline-primary w-100">Gestionar</a>
+              <a href="/Taller_Mecanico_DSI_/views/InventarioView.php" class="btn btn-outline-primary w-100">Gestionar</a>
             </div>
           </div>
         </div>
