@@ -3,7 +3,7 @@ class Conexion {
     public static function conectar() {
         $host = "localhost";
         $user = "root";
-        $pass = "";
+        $pass = "root";
         $db   = "taller";
 
         $conn = new mysqli($host, $user, $pass, $db);
