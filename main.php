@@ -1,9 +1,11 @@
 <?php
+
 session_start();
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['rol'])) {
   header("Location: index.html");
   exit;
 }
+
 
 $usuario = $_SESSION['usuario'];
 $rol = $_SESSION['rol'];
@@ -24,9 +26,10 @@ $hora = date("d/m/Y H:i:s");
   <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
-        <h1 class="h4">Bienvenido, <?= htmlspecialchars($usuario) ?> 👋 </h1>
+        <h1 class="h4">Bienvenido, <?= htmlspecialchars($usuario) ?> 👋</h1>
         <p class="mb-0">Rol: <strong><?= htmlspecialchars($rol) ?></strong> | Hora actual: <?= $hora ?></p>
         </ul>
+        
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item"><a href="controller/UsuarioController.php?accion=logout" class="btn btn-danger">Cerrar sesión</a></li>
           </ul>
@@ -86,7 +89,7 @@ $hora = date("d/m/Y H:i:s");
             <div class="card-body">
               <img src="public/inventario.png" alt="Inventario" class="img-fluid">
               <h5 class="card-title">Inventario</h5>
-              <a href="/Taller_Mecanico_DSI_/views/InventarioView.php" class="btn btn-outline-primary w-100">Gestionar</a>
+              <a href="/Taller_Mecanico_DSI_/model/Inventario.php" class="btn btn-outline-primary w-100">Gestionar</a>
             </div>
           </div>
         </div>
