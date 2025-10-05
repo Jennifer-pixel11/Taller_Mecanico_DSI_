@@ -1,12 +1,4 @@
 <?php
-$conexion = new mysqli("localhost", "root", "", "taller");
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
-?>
-
-/* 
-<?php
 class Conexion {
     public static function conectar() {
         $host = "sql305.infinityfree.com";
@@ -23,5 +15,3 @@ class Conexion {
     }
 }
 ?>
-
-*/
