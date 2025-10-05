@@ -13,3 +13,4 @@ if (isset($_GET['generar'])) {
     header("Location: ../views/ComprobanteView.php?id=$id_comprobante");
     exit;
 }
+

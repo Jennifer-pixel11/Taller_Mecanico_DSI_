@@ -1,130 +1,48 @@
-<?php 
-include '../controller/InventarioController.php'; 
-include '../components/navbar.php';
-?>
-<head>
-  <title>Inventario</title>
-</head>
+<?php
 
-  <div class="container py-5">
-    <h2 class="text-center mb-4">Inventario</h2>
+require_once __DIR__ . "/Conexion.php";
 
-    <!-- Botón para abrir el modal -->
-<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalProducto">
-  Agregar Producto
-</button>
+class Inventario {
+  private $conn;
 
-<!-- Modal -->
-<div class="modal fade" id="modalProducto" tabindex="-1" aria-labelledby="modalProductoLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalProductoLabel">Agregar Producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
+  public function __construct() {
+    $this->conn = Conexion::conectar();
+  }
 
-      <div class="modal-body">
-        <form method="post" enctype="multipart/form-data">
-          <?php if ($editarProducto): ?>
-            <input type="hidden" name="id" value="<?= $editarProducto['id'] ?>">
-          <?php endif; ?>
+  public function obtenerTodos() {
+    $sql = "SELECT i.*, p.nombre AS nombre_proveedor
+            FROM inventario i
+            LEFT JOIN proveedor_insumos p ON i.id_proveedor = p.id_proveedor
+            ORDER BY i.id DESC";
+    return $this->conn->query($sql);
+  }
 
-          <div class="mb-3">
-            <label class="form-label">Nombre</label>
-            <input type="text" name="nombre" class="form-control" value="<?= $editarProducto['nombre'] ?? '' ?>" required>
-          </div>
+  public function obtenerPorId($id) {
+    $stmt = $this->conn->prepare("SELECT * FROM inventario WHERE id=?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_assoc();
+  }
 
-          <div class="mb-3">
-            <label class="form-label">Descripción</label>
-            <textarea name="descripcion" class="form-control" required><?= $editarProducto['descripcion'] ?? '' ?></textarea>
-          </div>
+  public function obtenerProveedores() {
+    return $this->conn->query("SELECT id_proveedor, nombre FROM proveedor_insumos ORDER BY nombre ASC");
+  }
 
-          <div class="mb-3">
-            <label class="form-label">Cantidad</label>
-            <input type="number" name="cantidad" class="form-control" value="<?= $editarProducto['cantidad'] ?? '' ?>" required>
-          </div>
+  public function agregar($nombre, $descripcion, $cantidad, $cantidad_minima, $precio, $imagen, $id_proveedor) {
+    $stmt = $this->conn->prepare("INSERT INTO inventario (nombre, descripcion, cantidad, cantidad_minima, precio, imagen, id_proveedor) VALUES (?,?,?,?,?,?,?)");
+    $stmt->bind_param("ssiidss", $nombre, $descripcion, $cantidad, $cantidad_minima, $precio, $imagen, $id_proveedor);
+    return $stmt->execute();
+  }
 
-          <div class="mb-3">
-            <label class="form-label">Precio</label>
-            <input type="number" step="0.01" name="precio" class="form-control" value="<?= $editarProducto['precio'] ?? '' ?>">
-          </div>
+  public function actualizar($id, $nombre, $descripcion, $cantidad, $cantidad_minima, $precio, $imagen, $id_proveedor) {
+    $stmt = $this->conn->prepare("UPDATE inventario SET nombre=?, descripcion=?, cantidad=?, cantidad_minima=?, precio=?, imagen=?, id_proveedor=? WHERE id=?");
+    $stmt->bind_param("ssiidssi", $nombre, $descripcion, $cantidad, $cantidad_minima, $precio, $imagen, $id_proveedor, $id);
+    return $stmt->execute();
+  }
 
-          <div class="mb-3">
-            <label class="form-label">Proveedor</label>
-            <select name="id_proveedor" class="form-select">
-              <option value="">-- Seleccione --</option>
-              <?php while($p = $proveedores->fetch_assoc()): ?>
-                <option value="<?= $p['id_proveedor'] ?>" <?= (isset($editarProducto['id_proveedor']) && $editarProducto['id_proveedor'] == $p['id_proveedor']) ? 'selected' : '' ?>>
-                  <?= $p['nombre'] ?>
-                </option>
-              <?php endwhile; ?>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Imagen</label>
-            <input type="file" name="imagen" class="form-control">
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" name="<?= $editarProducto ? 'editar' : 'agregar' ?>" class="btn btn-success">
-              <?= $editarProducto ? 'Actualizar' : 'Guardar' ?>
-            </button>
-          </div>
-        </form>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-    <!-- Tabla -->
-     <div class="table-responsive">
-    <table class="table table-bordered table-hover table-light">
-      <thead class="table-dark">
-        <tr>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Cantidad</th>
-          <th>Precio</th>
-          <th>Proveedor</th>
-          <th>Imagen</th>
-          <th>Fecha Modificación</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php while($item = $productos->fetch_assoc()): ?>
-        <tr>
-          <td><?= $item['nombre'] ?></td>
-          <td><?= $item['descripcion'] ?></td>
-          <td><?= $item['cantidad'] ?></td>
-          <td>$<?= number_format($item['precio'], 2) ?></td>
-          <td><?= $item['proveedor_nombre'] ?? 'N/D' ?></td>
-          <td><?php if ($item['imagen']): ?><img src="<?= $item['imagen'] ?>" width="50"><?php endif; ?></td>
-          <td><?= $item['fecha_modificacion'] ?></td>
-          <td>
-            <button 
-              type="button" 
-              class="btn btn-sm btn-warning w-100 m-1" 
-              data-bs-toggle="modal" 
-              data-bs-target="#modalProducto" 
-              onclick="window.location.href='?editar=<?= $item['id'] ?>'">
-              Editar
-            </button>
-            <a href="?eliminar=<?= $item['id'] ?>" onclick="return confirm('¿Eliminar este producto?')" class="btn btn-sm btn-danger w-100 m-1">Eliminar</a>
-          </td>
-        </tr>
-        <?php endwhile; ?>
-      </tbody>
-    </table>
-  </div>
-  </div>
-    <?php if ($editarProducto): ?>
-      <script>
-        const editarModal = new bootstrap.Modal(document.getElementById('modalProducto'));
-        window.addEventListener('load', () => editarModal.show());
-      </script>
-    <?php endif; ?>
+  public function eliminar($id) {
+    $stmt = $this->conn->prepare("DELETE FROM inventario WHERE id=?");
+    $stmt->bind_param("i", $id);
+    return $stmt->execute();
+  }
+}
