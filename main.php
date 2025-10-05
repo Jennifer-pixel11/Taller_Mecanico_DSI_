@@ -1,4 +1,5 @@
 <?php
+include './components/navbar.php';
 
 session_start();
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['rol'])) {
@@ -30,9 +31,7 @@ $hora = date("d/m/Y H:i:s");
         <p class="mb-0">Rol: <strong><?= htmlspecialchars($rol) ?></strong> | Hora actual: <?= $hora ?></p>
         </ul>
         
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a href="controller/UsuarioController.php?accion=logout" class="btn btn-danger">Cerrar sesión</a></li>
-          </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0"></ul>
       </div>
     </div>
 
