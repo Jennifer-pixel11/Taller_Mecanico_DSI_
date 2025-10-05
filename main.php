@@ -24,7 +24,7 @@ $hora = date("d/m/Y H:i:s");
   <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
-        <h1 class="h4">Bienvenido, <?= htmlspecialchars($usuario) ?> 👋</h1>
+        <h1 class="h4">Bienvenido, <?= htmlspecialchars($usuario) ?> 👋 </h1>
         <p class="mb-0">Rol: <strong><?= htmlspecialchars($rol) ?></strong> | Hora actual: <?= $hora ?></p>
         </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

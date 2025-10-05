@@ -1,5 +1,5 @@
 <?php
-// model/Inventario.php
+
 require_once __DIR__ . "/Conexion.php";
 
 class Inventario {
