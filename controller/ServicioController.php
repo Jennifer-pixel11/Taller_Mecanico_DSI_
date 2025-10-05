@@ -1,7 +1,16 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+
 require_once("../model/Servicio.php");
+require_once '../model/Conexion.php';
 
 $servicioModel = new Servicio();
+$servicios = $servicioModel->obtenerServicios();
+
+$servicioEditar = null;
+if (isset($_GET['editar'])) {
+    $servicioEditar = $servicioModel->obtenerPorId($_GET['editar']);
+}
 
 // Guardar servicio nuevo (manual)
 if (isset($_POST['guardar'])) {
@@ -38,3 +47,5 @@ if (isset($_GET['eliminar'])) {
     header("Location: ../views/ServicioView.php?msg=Servicio eliminado");
     exit;
 }
+
+?>

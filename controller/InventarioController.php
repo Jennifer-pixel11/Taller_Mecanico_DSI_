@@ -1,5 +1,4 @@
 <?php
-
 include '../controller/conexion.php'; 
 
 
@@ -162,3 +161,29 @@ $productos = $conexion->query("
 ");
 
 $proveedores = $conexion->query("SELECT id_proveedor, nombre FROM proveedor_insumos ORDER BY nombre ASC");
+
+
+date_default_timezone_set('America/El_Salvador');
+
+// Función para listar imágenes del directorio
+function listar_imagenes_dir($relDir) {
+    $abs = realpath(__DIR__ . '/../' . $relDir);
+    $out = [];
+    if ($abs && is_dir($abs)) {
+        foreach (scandir($abs) as $f) {
+            if ($f === '.' || $f === '..') continue;
+            if (preg_match('/\.(png|jpe?g|webp|gif)$/i', $f)) {
+                $out[] = $relDir . '/' . $f;
+            }
+        }
+    }
+    return $out;
+}
+
+$galeria = array_merge(
+    listar_imagenes_dir('inventario'),
+    listar_imagenes_dir('uploads')
+);
+
+
+?>

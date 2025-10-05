@@ -10,7 +10,7 @@
 </head>
 <body class="bg-light">
 
-<!-- Navbar superior -->
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="barnav">
       <div class="container-fluid">
         <a class="navbar-brand" href="#"><img src="/Taller_Mecanico_DSI_/public/logotipo.png" alt="Logo" height="70"></a>

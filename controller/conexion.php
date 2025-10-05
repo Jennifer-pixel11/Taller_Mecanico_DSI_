@@ -5,7 +5,7 @@ if ($conexion->connect_error) {
 }
 ?>
 
-/* 
+<!-- /* 
 <?php
 class Conexion {
     public static function conectar() {
@@ -24,4 +24,4 @@ class Conexion {
 }
 ?>
 
-*/
+*/ -->

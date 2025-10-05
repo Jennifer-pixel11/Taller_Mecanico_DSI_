@@ -1,20 +1,12 @@
 <?php 
 include("../controller/ProveedorController.php");
-?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Proveedores</title>
+include '../components/navbar.php';
 
-  <!-- CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="icon" href="/Taller_Mecanico_DSI_/public/logotipo.png" type="image/png">
-  <link rel="stylesheet" href="/Taller_Mecanico_DSI_/static/css/style.css">
-  <link rel="stylesheet" href="/Taller_Mecanico_DSI_/public/styles.css">
+?>
+
+<head>
+  <title>Proveedores</title>
 </head>
-<body class="bg-light">
-  <?php include __DIR__ . '/../components/navbar.php'; ?>
 
   <div class="container py-5">
     <h2 class="text-center mb-4">Gestión de Proveedores</h2>
@@ -141,7 +133,3 @@ include("../controller/ProveedorController.php");
     </script>
   <?php endif; ?>
 
-  <!-- JS Bootstrap (necesario para el menú hamburguesa y los modales) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

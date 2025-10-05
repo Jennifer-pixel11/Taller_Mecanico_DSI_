@@ -10,67 +10,9 @@ if (isset($_GET['id'])) {
 ?>
 <head>
   <title>Comprobante</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-    }
-    .comprobante {
-      max-width: 700px;
-      margin: auto;
-      background: #fff;
-      border: 1px solid #ddd;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid #000;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-    }
-    .header img {
-      max-height: 80px;
-    }
-    .header .taller-info {
-      text-align: right;
-    }
-    .section {
-      margin-bottom: 15px;
-    }
-    .section h3 {
-      margin-bottom: 5px;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 3px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    table, th, td {
-      border: 1px solid #000;
-    }
-    th, td {
-      padding: 8px;
-      text-align: left;
-    }
-    .total {
-      text-align: right;
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .footer {
-      margin-top: 30px;
-      text-align: center;
-      font-size: 12px;
-      color: #555;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="../static/css/comprobante.css">
 </head>
-<body>
+
 <div class="comprobante">
   <div class="header">
     <!-- Logo -->
@@ -142,4 +84,4 @@ if (isset($_GET['id'])) {
     <p>Este comprobante no sustituye factura de crédito fiscal. Garantía de 30 días sobre mano de obra.</p>
   </div>
 </div>
-</body>
+

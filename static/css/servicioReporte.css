@@ -1,0 +1,9 @@
+ .kpi { border:1px solid #e5e5e5; border-radius:12px; padding:12px; text-align:center; }
+    .kpi h3 { margin:4px 0; font-size:1.15rem; }
+    .kpi small { color:#666; }
+    @media print {
+      .no-print { display:none !important; }
+      .kpi { page-break-inside: avoid; }
+      table { page-break-inside: auto; }
+      tr { page-break-inside: avoid; page-break-after: auto; }
+    }

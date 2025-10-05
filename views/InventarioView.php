@@ -3,59 +3,10 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 include '../controller/InventarioController.php';
 include '../components/navbar.php';
-date_default_timezone_set('America/El_Salvador');
 
-function listar_imagenes_dir($relDir) {
-  $abs = realpath(__DIR__ . '/../' . $relDir);
-  $out = [];
-  if ($abs && is_dir($abs)) {
-    foreach (scandir($abs) as $f) {
-      if ($f === '.' || $f === '..') continue;
-      if (preg_match('/\.(png|jpe?g|webp|gif)$/i', $f)) {
-        $out[] = $relDir . '/' . $f;
-      }
-    }
-  }
-  return $out;
-}
-$galeria = array_merge(
-  listar_imagenes_dir('inventario'), // ojo minúsculas
-  listar_imagenes_dir('uploads')
-);
-sort($galeria);
 ?>
 <head>
   <title>Inventario</title>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="../public/styles.css">
-  <script>
-    function filtrar() {
-      const q = document.getElementById('q').value.toLowerCase();
-      document.querySelectorAll('#tabla-inventario tbody tr').forEach(tr=>{
-        tr.style.display = tr.innerText.toLowerCase().includes(q) ? '' : 'none';
-      });
-    }
-    function previewFile(input, imgId) {
-      const file = input.files[0];
-      const img = document.getElementById(imgId);
-      if (!img) return;
-      if (file) {
-        const r = new FileReader();
-        r.onload = e => img.src = e.target.result;
-        r.readAsDataURL(file);
-      }
-    }
-    function previewSelect(sel, imgId) {
-      const img = document.getElementById(imgId);
-      if (!img) return;
-      img.src = sel.value || '';
-    }
-    function toggleImagenFuente() {
-      const modo = document.querySelector('input[name="modo_imagen"]:checked').value;
-      document.getElementById('bloqueSubir').style.display   = (modo==='subir')?'block':'none';
-      document.getElementById('bloqueGaleria').style.display = (modo==='galeria')?'block':'none';
-    }
-  </script>
 </head>
 
 <div class="container py-4">
@@ -234,6 +185,9 @@ sort($galeria);
     </form>
   </div>
 </div>
+
+  <script src="../static/js/inventario.js"></script>
+
 
 <?php if ($editarProducto): ?>
 <script>
