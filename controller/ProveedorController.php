@@ -1,9 +1,8 @@
 <?php
-// controller/ProveedorController.php
-// Conexión
-include '../controller/conexion.php';
-
-
+require_once(__DIR__ . "/Conexion.php");
+/*Para Host
+$conexion = Conexion::conectar();
+*/
 // Agregar proveedor
 if (isset($_POST['agregarProveedor'])) {
     $nombre = $_POST['nombre'];
@@ -15,7 +14,7 @@ if (isset($_POST['agregarProveedor'])) {
 
     $conexion->query("INSERT INTO proveedor_insumos (nombre, nombre_contacto, telefono, correo_electronico, direccion, rubro) 
                       VALUES ('$nombre', '$nombre_contacto', '$telefono', '$correo_electronico', '$direccion', '$rubro')");
-    header("Location: ProveedorView.php");
+    header("Location: ../views/ProveedorView.php");
     exit;
 }
 // Editar proveedor
@@ -32,14 +31,14 @@ if (isset($_POST['editarProveedor'])) {
                       SET nombre = '$nombre', nombre_contacto = '$nombre_contacto', telefono = '$telefono', 
                           correo_electronico = '$correo_electronico', direccion = '$direccion', rubro = '$rubro' 
                       WHERE id_proveedor = $id");
-    header("Location: ProveedorView.php");
+    header("Location: ../views/ProveedorView.php");
     exit;
 }
 // Eliminar proveedor
 if (isset($_GET['eliminar'])) {
     $id = $_GET['eliminar'];
     $conexion->query("DELETE FROM proveedor_insumos WHERE id_proveedor = $id");
-    header("Location: ProveedorView.php");
+    header("Location: ../views/ProveedorView.php");
     exit;
 }
 // Obtener proveedor para editar

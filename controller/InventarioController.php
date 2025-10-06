@@ -1,5 +1,6 @@
 <?php
-include '../controller/conexion.php'; 
+require_once(__DIR__ . "/Conexion.php");
+//$conexion = Conexion::conectar();
 
 
 if (!function_exists('crearNotificacion')) {
@@ -50,7 +51,6 @@ if (isset($_POST['agregar'])) {
     move_uploaded_file($ruta_temp, '../' . $ruta_final);
   }
 
-
   $stmt = $conexion->prepare("INSERT INTO inventario (nombre, descripcion, cantidad, cantidad_minima, precio, imagen, id_proveedor) VALUES (?,?,?,?,?,?,?)");
   $stmt->bind_param("ssiidss", $nombre, $descripcion, $cantidad, $cantidad_minima, $precio, $ruta_final, $id_proveedor);
   $stmt->execute();
@@ -67,7 +67,7 @@ if (isset($_POST['agregar'])) {
     }
   }
 
-  header("Location: InventarioView.php");
+  header("Location: ../views/InventarioView.php");
   exit;
 }
 
@@ -124,7 +124,7 @@ if (isset($_POST['actualizar'])) {
     }
   }
 
-  header("Location: InventarioView.php");
+  header("Location: ../views/InventarioView.php");
   exit;
 }
 
@@ -141,7 +141,7 @@ if (isset($_GET['eliminar'])) {
   if ($reg && function_exists('crearNotificacion')) {
     crearNotificacion($conexion, "MOV|tipo=salida|motivo={$motivo_del}|producto={$reg['nombre']}|id={$reg['id']}|cant={$reg['cantidad']}");
   }
-  header("Location: InventarioView.php");
+  header("Location: ../views/InventarioView.php");
   exit;
 }
 
