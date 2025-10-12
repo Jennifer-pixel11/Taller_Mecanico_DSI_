@@ -14,10 +14,16 @@ if (isset($_GET['editar'])) {
 
 // Guardar servicio nuevo (manual)
 if (isset($_POST['guardar'])) {
-    $vehiculo_id = $_POST['vehiculo_id'];
-    $descripcion = $_POST['descripcion'];
-    $fecha       = $_POST['fecha'];
-    $costo       = $_POST['costo'];
+    $vehiculo_id = $_POST['vehiculo_id'] ?? '';
+    $descripcion = $_POST['descripcion'] ?? '';
+    $fecha       = $_POST['fecha'] ?? '';
+    $costo       = $_POST['costo'] ?? '';
+
+    // Server-side validation
+    if (empty($vehiculo_id) || empty($descripcion) || empty($fecha) || empty($costo)) {
+        header("Location: ../views/ServicioView.php?error=Por+favor+complete+todos+los+campos+obligatorios");
+        exit;
+    }
 
     $servicioModel->agregar($vehiculo_id, $descripcion, $fecha, $costo);
 
@@ -27,11 +33,17 @@ if (isset($_POST['guardar'])) {
 
 // Editar servicio
 if (isset($_POST['editar'])) {
-    $id          = $_POST['id'];
-    $vehiculo_id = $_POST['vehiculo_id'];
-    $descripcion = $_POST['descripcion'];
-    $fecha       = $_POST['fecha'];
-    $costo       = $_POST['costo'];
+    $id          = $_POST['id'] ?? '';
+    $vehiculo_id = $_POST['vehiculo_id'] ?? '';
+    $descripcion = $_POST['descripcion'] ?? '';
+    $fecha       = $_POST['fecha'] ?? '';
+    $costo       = $_POST['costo'] ?? '';
+
+    // Server-side validation
+    if (empty($id) || empty($vehiculo_id) || empty($descripcion) || empty($fecha) || empty($costo)) {
+        header("Location: ../views/ServicioView.php?error=Por+favor+complete+todos+los+campos+obligatorios");
+        exit;
+    }
 
     $servicioModel->editar($id, $vehiculo_id, $descripcion, $fecha, $costo);
 

@@ -1,4 +1,6 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+
 require_once '../model/Vehiculo.php';
 require_once '../model/Conexion.php';
 
@@ -10,12 +12,10 @@ $vehiculoEditar = null;
 if (isset($_GET['editar'])) {
     $vehiculoEditar = $vehiculoModel->obtenerPorId($_GET['editar']);
 }
-
-// Navbar
-include '../components/navbar.php';
-
 // Conexión directa para cargar clientes
 $conn = Conexion::conectar();
+// Navbar
+include '../components/navbar.php';
 ?>
 <head>
   <title>Vehículos</title>
@@ -27,7 +27,7 @@ $conn = Conexion::conectar();
   <div class="card mb-4">
     <div class="card-header"><?= $vehiculoEditar ? "Editar Vehículo" : "Nuevo Vehículo" ?></div>
     <div class="card-body">
-      <form method="post" action="../controller/VehiculoController.php" >
+      <form method="post" action="../controller/VehiculoController.php" novalidate>
         <input type="hidden" name="id" value="<?= $vehiculoEditar['id'] ?? '' ?>">
 
         <div class="mb-3">
@@ -50,18 +50,19 @@ $conn = Conexion::conectar();
             }
             ?>
           </select>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Ingresa la Marca: <span class="text-danger"> * </span> </label>
-          <input type="text" id="marca" name="marca" placeholder="Toyota, Nissan, Hyundai..." class="form-control" 
+          <input type="text" name="marca" placeholder="Toyota, Nissan, Hyundai..." class="form-control" 
                  value="<?= $vehiculoEditar['marca'] ?? '' ?>" required>
           <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Ingresa el Modelo: <span class="text-danger"> * </span></label>
-          <input type="text" id="linea" name="modelo"  placeholder="Corolla, Civic, Escape, Hilux..." class="form-control" 
+          <input type="text" name="modelo"  placeholder="Corolla, Civic, Escape, Hilux..." class="form-control" 
                  value="<?= $vehiculoEditar['modelo'] ?? '' ?>" required>
           <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>

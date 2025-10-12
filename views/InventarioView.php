@@ -67,7 +67,7 @@ include '../components/navbar.php';
 
 <div class="modal fade" id="modalProducto" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
-    <form method="post" enctype="multipart/form-data" class="modal-content">
+    <form method="post" enctype="multipart/form-data" class="modal-content" novalidate>
       <div class="modal-header">
         <h5 class="modal-title"><?= $editarProducto ? 'Editar producto' : 'Agregar producto' ?></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -78,30 +78,35 @@ include '../components/navbar.php';
         <?php endif; ?>
 
         <div class="mb-2">
-          <label class="form-label">Nombre</label>
-          <input name="nombre" class="form-control" required value="<?= $editarProducto['nombre'] ?? '' ?>">
+          <label class="form-label">Ingresa el Nombre del producto: <span class="text-danger"> * </span></label>
+          <input name="nombre" placeholder="Aceite 10W-40"  class="form-control" required value="<?= $editarProducto['nombre'] ?? '' ?>">
+        <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
         <div class="mb-2">
-          <label class="form-label">Descripción</label>
-          <textarea name="descripcion" class="form-control" rows="2"><?= $editarProducto['descripcion'] ?? '' ?></textarea>
+          <label class="form-label">Ingresa una descripción con más especificaciones del producto <span class="text-danger"> * </span></label>
+          <textarea name="descripcion" placeholder="Aceite 10W-40 sintético, para motor gasolina, envase 4L, marca Castrol" class="form-control" rows="2"><?= $editarProducto['descripcion'] ?? '' ?></textarea>
+        <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
         <div class="row g-2">
           <div class="col-6">
-            <label class="form-label">Cantidad</label>
+            <label class="form-label">Ingresa la cantidad de productos: <span class="text-danger"> * </span></label>
             <input type="number" name="cantidad" min="0" class="form-control" required value="<?= $editarProducto['cantidad'] ?? 0 ?>">
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
           </div>
           <div class="col-6">
             <label class="form-label">Cantidad mínima</label>
-            <input type="number" name="cantidad_minima" min="0" class="form-control" required value="<?= $editarProducto['cantidad_minima'] ?? 5 ?>">
+            <input type="number" name="cantidad_minima"  min="0" class="form-control" required value="<?= $editarProducto['cantidad_minima'] ?? 5 ?>">
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
           </div>
         </div>
         <div class="row g-2 mt-1">
           <div class="col-6">
-            <label class="form-label">Precio ($)</label>
+            <label class="form-label">Precio ($) <span class="text-danger"> * </span></label>
             <input type="number" step="0.01" min="0" name="precio" class="form-control" required value="<?= $editarProducto['precio'] ?? 0 ?>">
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
           </div>
           <div class="col-6">
-            <label class="form-label">Proveedor</label>
+            <label class="form-label">Proveedor <span class="text-danger"> * </span></label>
             <select name="id_proveedor" class="form-select">
               <option value="">— Seleccione —</option>
               <?php while ($pr = $proveedores->fetch_assoc()): ?>
@@ -110,6 +115,7 @@ include '../components/navbar.php';
                 </option>
               <?php endwhile; ?>
             </select>
+            <div class="invalid-feedback">Este campo es obligatorio.</div>
           </div>
         </div>
 

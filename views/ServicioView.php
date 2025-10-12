@@ -26,7 +26,7 @@ include '../components/navbar.php';
   <div class="card mb-4">
     <div class="card-header"><?= $servicioEditar ? "Editar Servicio" : "Nuevo Servicio" ?></div>
     <div class="card-body">
-      <form method="post" action="../controller/ServicioController.php">
+      <form method="post" action="../controller/ServicioController.php" novalidate>
         <input type="hidden" name="id" value="<?= $servicioEditar['id'] ?? '' ?>">
 
         <!-- Vehículo -->
@@ -45,12 +45,14 @@ include '../components/navbar.php';
             }
             ?>
           </select>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <!-- Descripción -->
         <div class="mb-3">
           <label class="form-label">Ingresa una Descripción del servicio que se brindará: <span class="text-danger"> * </span></label>
           <textarea name="descripcion" placeholder="Servicio de mantenimiento preventivo,..." class="form-control" rows="3" required><?= $servicioEditar['descripcion'] ?? '' ?></textarea>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <!-- Fecha -->
@@ -58,17 +60,20 @@ include '../components/navbar.php';
           <label class="form-label">Fecha<span class="text-danger"> * </span></label>
           <input type="date" name="fecha" class="form-control"
                  value="<?= $servicioEditar['fecha'] ?? '' ?>" required>
-        </div>
+        <div class="invalid-feedback">Este campo es obligatorio.</div>
+                </div>
 
         <!-- Costo -->
         <div class="mb-3">
           <label class="form-label">Ingresa el Costo Total del servicio: <span class="text-danger"> * </span></label>
           <input type="number" step="0.01" name="costo" placeholder="$00.00 " class="form-control"
                  value="<?= $servicioEditar['costo'] ?? '' ?>" required>
-        </div>
+        <div class="invalid-feedback">Este campo es obligatorio.</div>
+                </div>
 
         <?php if ($servicioEditar): ?>
           <button type="submit" name="editar" class="btn btn-warning">Actualizar Servicio</button>
+     
           <a href="ServicioView.php" class="btn btn-secondary">Cancelar</a>
         <?php else: ?>
           <button type="submit" name="guardar" class="btn btn-success">Guardar Servicio</button>
@@ -123,3 +128,4 @@ include '../components/navbar.php';
 </div>
 
 </div>
+<script src="../static/js/validacionServicio.js"></script>

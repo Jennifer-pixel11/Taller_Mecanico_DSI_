@@ -26,7 +26,7 @@ include '../components/navbar.php';
   <div class="card mb-4">
     <div class="card-header"><?= $citaEditar ? "Editar Cita" : "Nueva Cita" ?></div>
     <div class="card-body">
-      <form method="post" action="../controller/CitaController.php">
+      <form method="post" action="../controller/CitaController.php" novalidate>
         <input type="hidden" name="id" value="<?= $citaEditar['id'] ?? '' ?>">
 
         <!-- Cliente -->
@@ -43,6 +43,7 @@ include '../components/navbar.php';
             }
             ?>
           </select>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <!-- Vehículo -->
@@ -61,6 +62,7 @@ include '../components/navbar.php';
             }
             ?>
           </select>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <!-- Servicio -->
@@ -77,6 +79,7 @@ include '../components/navbar.php';
             }
             ?>
           </select>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <!-- Fecha -->
@@ -84,6 +87,7 @@ include '../components/navbar.php';
           <label class="form-label">Fecha de cita: <span class="text-danger"> * </span></label>
           <input type="date" name="fecha" class="form-control"
                  value="<?= $citaEditar['fecha'] ?? '' ?>" required>
+                 <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <!-- Hora -->
@@ -91,12 +95,14 @@ include '../components/navbar.php';
           <label class="form-label">Hora ded cita: <span class="text-danger"> * </span></label>
           <input type="time" name="hora" class="form-control"
                  value="<?= $citaEditar['hora'] ?? '' ?>" required>
+                 <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <!-- Descripción -->
         <div class="mb-3">
           <label class="form-label">Descripción del servicio: <span class="text-danger"> * </span></label>
           <textarea name="descripcion"  placeholder="Servicio de mantenimiento preventivo,..." class="form-control" rows="3" required><?= $citaEditar['descripcion'] ?? '' ?></textarea>
+        <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <?php if ($citaEditar): ?>
@@ -151,3 +157,4 @@ include '../components/navbar.php';
     </tbody>
   </table>
 </div>
+<script src="../static/js/validacionCita.js"></script>

@@ -1,7 +1,16 @@
 <?php 
-include("../controller/ProveedorController.php");
+if (session_status() === PHP_SESSION_NONE) session_start();
 include '../components/navbar.php';
+require_once '../model/Proveedor.php';
+require_once '../model/Conexion.php';
 
+$proveedorModel = new Proveedor();
+$proveedores = $proveedorModel->obtenerProveedores();
+
+$proveedorEditar = null;
+if (isset($_GET['editar'])) {
+    $proveedorEditar = $proveedorModel->obtenerPorId($_GET['editar']);
+}
 ?>
 
 <head>
@@ -28,7 +37,7 @@ include '../components/navbar.php';
           </div>
 
           <div class="modal-body">
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" novalidate>
               <?php if (isset($editarProveedor)): ?>
                 <input type="hidden" name="id" value="<?= $editarProveedor['id_proveedor'] ?>">
               <?php endif; ?>
@@ -37,37 +46,43 @@ include '../components/navbar.php';
                 <label class="form-label">Nombre del Proveedor:<span class="text-danger"> * </span></label>
                 <input type="text" name="nombre" placeholder="Empresa Repuestos" class="form-control"
                        value="<?= $editarProveedor['nombre'] ?? '' ?>" required>
-              </div>
+              <div class="invalid-feedback">Este campo es obligatorio.</div>
+                      </div>
 
               <div class="mb-3">
                 <label class="form-label">Nombre de contacto:<span class="text-danger"> * </span></label>
                 <input type="text" name="nombre_contacto" placeholder="Fulanito Mengano" class="form-control"
                        value="<?= $editarProveedor['nombre_contacto'] ?? '' ?>" required>
-              </div>
+             <div class="invalid-feedback">Este campo es obligatorio.</div>
+                      </div>
 
               <div class="mb-3">
                 <label class="form-label">Teléfono:<span class="text-danger"> * </span></label>
                 <input type="text" name="telefono" placeholder="xxxx xxxx" class="form-control"
                        value="<?= $editarProveedor['telefono'] ?? '' ?>" required>
-              </div>
+              <div class="invalid-feedback">Este campo es obligatorio.</div>
+                      </div>
 
               <div class="mb-3">
                 <label class="form-label">Correo electrónico:<span class="text-danger"> * </span></label>
                 <input type="email" name="correo_electronico" placeholder="usuario@example.com" class="form-control"
                        value="<?= $editarProveedor['correo_electronico'] ?? '' ?>" required>
-              </div>
+              <div class="invalid-feedback">Este campo es obligatorio.</div>
+                      </div>
 
               <div class="mb-3">
                 <label class="form-label">Dirección:<span class="text-danger"> * </span></label>
                 <input type="text" name="direccion" class="form-control" placeholder="Av. Siempre Viva 742"
                        value="<?= $editarProveedor['direccion'] ?? '' ?>" required>
-              </div>
+              <div class="invalid-feedback">Este campo es obligatorio.</div>
+                      </div>
 
               <div class="mb-3">
                 <label class="form-label">Rubro:<span class="text-danger"> * </span></label>
                 <input type="text" name="rubro" placeholder="repuestos, etc." class="form-control"
                        value="<?= $editarProveedor['rubro'] ?? '' ?>" required>
-              </div>
+             <div class="invalid-feedback">Este campo es obligatorio.</div>
+                      </div>
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -100,7 +115,7 @@ include '../components/navbar.php';
           </tr>
         </thead>
         <tbody>
-        <?php while ($item = $resultado->fetch_assoc()): ?>
+  <?php while ($item = $proveedores->fetch_assoc()): ?>
           <tr>
             <td><?= $item['nombre'] ?></td>
             <td><?= $item['nombre_contacto'] ?></td>
@@ -132,4 +147,4 @@ include '../components/navbar.php';
       window.addEventListener('load', () => editarModal.show());
     </script>
   <?php endif; ?>
-
+<script src="../static/js/validacionProveedor.js"></script>
