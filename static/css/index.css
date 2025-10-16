@@ -1,0 +1,119 @@
+  body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Panel azul */
+    .left-panel {
+      flex: 1;
+      background-color: #0d1b4c;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+    }
+    .left-panel h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      z-index: 1;
+      text-align: center;
+    }
+    .left-logo img {
+      width: 140px;
+      z-index: 1;
+    }
+
+    /* Círculos decorativos */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      z-index: 0;
+    }
+    .circle.small { width: 60px; height: 60px; top: 20%; left: 15%; }
+    .circle.medium { width: 120px; height: 120px; bottom: 20%; right: 10%; }
+    .circle.large { width: 200px; height: 200px; top: -80px; right: -80px; }
+
+    /* Panel blanco */
+    .right-panel {
+      flex: 1;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column; /* texto arriba + card debajo */
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .welcome-title {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      color: #0d1b4c;
+      text-align: center;
+    }
+    .login-card {
+      width: 350px;
+    }
+    .login-card h3 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: bold;
+      color: #0d1b4c;
+    }
+    .btn-primary {
+      background-color: #0d1b4c;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #142a6e;
+    }
+    .extra-links {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    .extra-links a {
+      color: #0d1b4c;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .extra-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* 🔹 Responsive: panel azul como banner */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .left-panel {
+        flex: none;
+        width: 100%;
+        height: auto;
+        padding: 1.5rem;
+      }
+      .left-panel h1 {
+        font-size: 1.5rem;
+      }
+      .left-logo img {
+        width: 90px;
+        margin-top: 0.5rem;
+      }
+      .circle { display: none; }
+      .right-panel {
+        flex: none;
+        width: 100%;
+        height: auto;
+        padding: 2rem 0;
+      }
+      .login-card {
+        width: 90%;
+        max-width: 400px;
+      }
+    }

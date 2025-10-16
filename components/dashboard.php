@@ -1,17 +1,8 @@
-<?php
-// dashboard.php
-
-?>
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-
     <!-- Incluir Chart.js desde CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-
 </head>
 
 <div class="container mt-4">
@@ -27,9 +18,6 @@
         </div>
     </div>
 </div>
-
-
-
   
     <!-- Dashboard -->
 <div class="container mt-4">
@@ -56,7 +44,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
 // Gráfico de Clientes
@@ -118,7 +105,3 @@ new Chart(document.getElementById("clientesChart"), {
         }
     });
 </script>
-<script>
-
-
-
