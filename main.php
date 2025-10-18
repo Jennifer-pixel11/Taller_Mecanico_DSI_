@@ -28,6 +28,7 @@
             <li class="nav-item"><a class="nav-link active" href="./views/InventarioView.php">INVENTARIO</a></li>
             <li class="nav-item"><a class="nav-link active" href="./views/ProveedorView.php">PROVEEDORES</a></li>
             <li class="nav-item"><a class="nav-link active" href="./views/NotificacionView.php">NOTIFICACIONES</a></li>
+            <li class="nav-item"><a class="nav-link active" href="./views/correoView.php">CORREO EMAIL</a></li>
           </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item"><a href="./controller/UsuarioController.php?accion=logout" class="btn btn-danger">Cerrar sesión</a></li>

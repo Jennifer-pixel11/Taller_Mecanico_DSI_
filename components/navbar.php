@@ -21,17 +21,18 @@
    <!-- Menú expandible -->
         <div class="collapse navbar-collapse" id="menuExpandible">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/main.php">INICIO</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/ClienteView.php">CLIENTES</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/VehiculoView.php">VEHÍCULOS</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/ServicioView.php">SERVICIOS</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/CitaView.php">CITAS</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/InventarioView.php">INVENTARIO</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/ProveedorView.php">PROVEEDORES</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/Taller_Mecanico_DSI_/views/NotificacionView.php">NOTIFICACIONES</a></li>
+            <li class="nav-item"><a class="nav-link active" href="../main.php">INICIO</a></li>
+            <li class="nav-item"><a class="nav-link active" href="../views/ClienteView.php">CLIENTES</a></li>
+            <li class="nav-item"><a class="nav-link active" href="../views/VehiculoView.php">VEHÍCULOS</a></li>
+            <li class="nav-item"><a class="nav-link active" href="../views/ServicioView.php">SERVICIOS</a></li>
+            <li class="nav-item"><a class="nav-link active" href="../views/CitaView.php">CITAS</a></li>
+            <li class="nav-item"><a class="nav-link active" href="../views/InventarioView.php">INVENTARIO</a></li>
+            <li class="nav-item"><a class="nav-link active" href="../views/ProveedorView.php">PROVEEDORES</a></li>
+            <li class="nav-item"><a class="nav-link active" href="../views/NotificacionView.php">NOTIFICACIONES</a></li>
+            <li class="nav-item"><a class="nav-link active" href="../views/correoView.php">CORREO EMAIL</a></li>
           </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a href="/Taller_Mecanico_DSI_/controller/UsuarioController.php?accion=logout" class="btn btn-danger">Cerrar sesión</a></li>
+            <li class="nav-item"><a href="./controller/UsuarioController.php?accion=logout" class="btn btn-danger">Cerrar sesión</a></li>
           </ul>
          <!--  <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Buscar">
