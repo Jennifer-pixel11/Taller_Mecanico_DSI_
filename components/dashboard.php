@@ -6,7 +6,7 @@
 </head>
 
 <div class="container mt-4">
-    <div class="card bg-success p-2 text-dark bg-opacity-10 border-0 rounded-4 w-100">
+    <div class="card bg-white p-2 text-dark bg-opacity-15 border-0 rounded-4 w-100">
         <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-center">
             
             <!-- Información del Usuario -->

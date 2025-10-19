@@ -1,6 +1,10 @@
 <?php
     // Navbar
     include '../components/navbar.php';
+
+require_once '../model/Cliente.php';
+$clienteModel = new Cliente();
+$clientes = $clienteModel->obtenerClientes();
 ?>
 <head>
     <title>Enviar Correo </title>
@@ -16,10 +20,20 @@
         </div>
         <div class="card-body">
             <form id="contact_form" enctype="multipart/form-data">
-                <div class="mb-3">    
+              <!--   <div class="mb-3">    
                     <label class="form-label">Ingresa el correo electronico: <span class="text-danger"> * </span></label>
                     <input class="form-control" type="email" id="correo" placeholder="fulanito@gmail.com" name="correo" />
-                </div>
+                </div> --> 
+                <div class="mb-3">
+    <label class="form-label">Selecciona el correo destinatario: <span class="text-danger"> * </span></label>
+    <select class="form-control" id="correo" name="correo" required>
+        <option value="">-- Selecciona un correo de un cliente --</option>
+        <?php while($cliente = $clientes->fetch_assoc()): ?>
+            <option value="<?= $cliente['correo'] ?>"><?= $cliente['nombre'] ?> (<?= $cliente['correo'] ?>)</option>
+        <?php endwhile; ?>
+    </select>
+</div>
+
                 <div class="mb-3">
                     <!-- Correo del destinatario -->
                     <label class="form-label">Ingresa el asunto del correo: <span class="text-danger"> * </span></label>
