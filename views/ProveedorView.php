@@ -1,4 +1,7 @@
 <?php 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 if (session_status() === PHP_SESSION_NONE) session_start();
 include '../components/navbar.php';
 require_once '../model/Proveedor.php';
@@ -21,9 +24,9 @@ if (isset($_GET['editar'])) {
     <h2 class="text-center mb-4">Gestión de Proveedores</h2>
 
     <!-- Botón para abrir el modal -->
-    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalProveedor">
-      Nuevo Proveedor
-    </button>
+    <a href="ProveedorView.php?nuevo=1" class="btn btn-primary mb-3">
+        Nuevo Proveedor
+    </a>
 
     <!-- Modal -->
     <div class="modal fade" id="modalProveedor" tabindex="-1" aria-labelledby="modalProveedorLabel" aria-hidden="true">
@@ -31,64 +34,65 @@ if (isset($_GET['editar'])) {
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modalProveedorLabel">
-              <?= isset($editarProveedor) ? 'Editar Proveedor' : 'Nuevo Proveedor' ?>
+              <?= isset($proveedorEditar) ? 'Editar Proveedor' : 'Nuevo Proveedor' ?>
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
           </div>
 
           <div class="modal-body">
-            <form method="post" enctype="multipart/form-data" novalidate>
-              <?php if (isset($editarProveedor)): ?>
-                <input type="hidden" name="id" value="<?= $editarProveedor['id_proveedor'] ?>">
+            <form action="../controller/ProveedorController.php" method="post" enctype="multipart/form-data" novalidate>
+              <?php if (isset($proveedorEditar)): ?>
+                <input type="hidden" name="id" value="<?= $proveedorEditar['id_proveedor'] ?>">
               <?php endif; ?>
 
               <div class="mb-3">
                 <label class="form-label">Nombre del Proveedor:<span class="text-danger"> * </span></label>
                 <input type="text" name="nombre" placeholder="Empresa Repuestos" class="form-control"
-                       value="<?= $editarProveedor['nombre'] ?? '' ?>" required>
+                       value="<?= $proveedorEditar['nombre'] ?? '' ?>" required>
               <div class="invalid-feedback">Este campo es obligatorio.</div>
                       </div>
 
               <div class="mb-3">
                 <label class="form-label">Nombre de contacto:<span class="text-danger"> * </span></label>
                 <input type="text" name="nombre_contacto" placeholder="Fulanito Mengano" class="form-control"
-                       value="<?= $editarProveedor['nombre_contacto'] ?? '' ?>" required>
+                       value="<?= $proveedorEditar['nombre_contacto'] ?? '' ?>" required>
              <div class="invalid-feedback">Este campo es obligatorio.</div>
                       </div>
 
               <div class="mb-3">
                 <label class="form-label">Teléfono:<span class="text-danger"> * </span></label>
                 <input type="text" name="telefono" placeholder="xxxx xxxx" class="form-control"
-                       value="<?= $editarProveedor['telefono'] ?? '' ?>" required>
+                       value="<?= $proveedorEditar['telefono'] ?? '' ?>" required>
               <div class="invalid-feedback">Este campo es obligatorio.</div>
                       </div>
 
               <div class="mb-3">
                 <label class="form-label">Correo electrónico:<span class="text-danger"> * </span></label>
                 <input type="email" name="correo_electronico" placeholder="usuario@example.com" class="form-control"
-                       value="<?= $editarProveedor['correo_electronico'] ?? '' ?>" required>
+                       value="<?= $proveedorEditar['correo_electronico'] ?? '' ?>" required>
               <div class="invalid-feedback">Este campo es obligatorio.</div>
                       </div>
 
               <div class="mb-3">
                 <label class="form-label">Dirección:<span class="text-danger"> * </span></label>
                 <input type="text" name="direccion" class="form-control" placeholder="Av. Siempre Viva 742"
-                       value="<?= $editarProveedor['direccion'] ?? '' ?>" required>
+                       value="<?= $proveedorEditar['direccion'] ?? '' ?>" required>
               <div class="invalid-feedback">Este campo es obligatorio.</div>
                       </div>
 
               <div class="mb-3">
                 <label class="form-label">Rubro:<span class="text-danger"> * </span></label>
                 <input type="text" name="rubro" placeholder="repuestos, etc." class="form-control"
-                       value="<?= $editarProveedor['rubro'] ?? '' ?>" required>
+                       value="<?= $proveedorEditar['rubro'] ?? '' ?>" required>
              <div class="invalid-feedback">Este campo es obligatorio.</div>
                       </div>
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" name="<?= isset($editarProveedor) ? 'editarProveedor' : 'agregarProveedor' ?>"
+                <button type="submit" name="<?= isset($proveedorEditar) ? 'editarProveedor' : 'agregarProveedor' ?>"
                         class="btn btn-success">
-                  <?= isset($editarProveedor) ? 'Actualizar' : 'Guardar' ?>
+                    <?= isset($proveedorEditar) ? 'Actualizar' : 'Guardar' ?>
+                </button>
                 </button>
               </div>
             </form>
@@ -126,12 +130,11 @@ if (isset($_GET['editar'])) {
             <td><?= $item['estado'] ?></td>
             <td><?= $item['fecha_registro'] ?></td>
             <td>
-              <!-- Para editar: recarga con ?editar=ID y mostramos el modal al cargar -->
-              <a href="?editar=<?= $item['id_proveedor'] ?>" class="btn btn-sm btn-warning w-100 m-1">Editar</a>
+                <a href="ProveedorView.php?editar=<?= $item['id_proveedor'] ?>" class="btn btn-sm btn-warning w-100 m-1">Editar</a>
 
-              <!-- CORREGIDO: $item en lugar de $fila -->
-              <a href="?eliminar=<?= $item['id_proveedor'] ?>" class="btn btn-sm btn-danger w-100 m-1"
-                 onclick="return confirm('¿Eliminar proveedor?')">Eliminar</a>
+                <a href="../controller/ProveedorController.php?eliminar=<?= $item['id_proveedor'] ?>" 
+                  class="btn btn-sm btn-danger w-100 m-1"
+                  onclick="return confirm('¿Estás seguro de que deseas eliminar este proveedor?')">Eliminar</a>
             </td>
           </tr>
         <?php endwhile; ?>
@@ -141,10 +144,12 @@ if (isset($_GET['editar'])) {
   </div>
 
   <!-- Mostrar modal si estamos en modo edición -->
-  <?php if (isset($editarProveedor)): ?>
-    <script>
-      const editarModal = new bootstrap.Modal(document.getElementById('modalProveedor'));
-      window.addEventListener('load', () => editarModal.show());
-    </script>
+  <?php if (isset($proveedorEditar) || isset($_GET['nuevo'])): ?>
+      <script>
+        const editarModal = new bootstrap.Modal(document.getElementById('modalProveedor'));
+        document.addEventListener('DOMContentLoaded', () => {
+            editarModal.show();
+        });
+      </script>
   <?php endif; ?>
 <script src="../static/js/validacionProveedor.js"></script>

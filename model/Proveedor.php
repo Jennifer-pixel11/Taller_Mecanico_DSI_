@@ -1,6 +1,6 @@
 <?php
 // model/Proveedor.php
-require_once 'Conexion.php';
+//require_once 'Conexion.php';
 class Proveedor {
 	private $conn;
 
