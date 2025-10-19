@@ -1,6 +1,6 @@
 <?php
-include '../controller/conexion.php'; 
-
+require_once(__DIR__ . "/Conexion.php");
+//$conexion = Conexion::conectar();
 
 if (!function_exists('crearNotificacion')) {
   function crearNotificacion($conexion, $mensaje, $destinatario = 'Sistema') {

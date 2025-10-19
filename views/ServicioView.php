@@ -122,7 +122,7 @@ include '../components/navbar.php';
     </tbody>
   </table>
   <div class="mb-3">
-  <a href="/Taller_Mecanico_DSI_/views/ServicioReporteView.php" class="btn btn-outline-primary" target="_blank">
+  <a href="../views/ServicioReporteView.php" class="btn btn-outline-primary" target="_blank">
     📊 Informe General de Servicios
   </a>
 </div>

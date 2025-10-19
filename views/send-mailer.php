@@ -17,8 +17,8 @@ require ('mail/phpmailer/src/SMTP.php');
         //init data
         $mail = new PHPMailer;
         $mail->isSMTP();
-        $mail->Username = "ap18018@ues.edu.sv"; // Replace with your mail id
-        $mail->Password = "szol zoxn doql wfss"; //Replace with your mail pass
+        $mail->Username = "mecanicapruebas@gmail.com"; // Replace with your mail id
+        $mail->Password = "nigm mnaj hkur vowl"; //Replace with your mail pass
         $mail->SMTPAuth = true;  // authentication enabled
         $mail->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
         $mail->SMTPAutoTLS = false;
@@ -27,9 +27,9 @@ require ('mail/phpmailer/src/SMTP.php');
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;   
 
         //Recipients
-        $mail->setFrom('ap18018@ues.edu.sv', 'MecanicaExpert Form');
+        $mail->setFrom('mecanicapruebas@gmail.com', 'MecanicaExpert Form');
         $mail->addAddress($email, 'MECANICA EXPERT | Taller Mecanico');      // Add a recipient
-        $mail->addReplyTo('ap18018@ues.edu.sv', 'MECANICA EXPERT');  //add replay to email
+        $mail->addReplyTo('mecanicapruebas@gmail.com', 'MECANICA EXPERT');  //add replay to email
 
         // Content
         $mail->isHTML(true);  // Set email format to HTML
