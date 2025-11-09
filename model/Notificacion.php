@@ -1,9 +1,7 @@
 <?php
 // model/Notificacion.php
-
 require_once(__DIR__ . "/Conexion.php");
 $conexion = Conexion::conectar();
-
 if ($conexion->connect_error) {
     die("Error de conexión: " . $conexion->connect_error);
 }

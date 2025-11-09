@@ -2,11 +2,9 @@
 // controller/ProveedorController.php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-
 // 1. Incluimos los archivos necesarios
 require_once '../model/Conexion.php';
 require_once '../model/Proveedor.php';
-
 
 // 2. Creamos una instancia del Modelo. Él es el único que hablará con la BD.
 $proveedorModel = new Proveedor();
