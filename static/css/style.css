@@ -38,3 +38,17 @@ body {
 /*  font-weight: 600; */
   font-size: 14px;
 }
+
+.tag{padding:.2rem .45rem;border-radius:.45rem;font-size:.85rem}
+    .entrada{background:#e8f7ee;color:#176b3a}
+    .salida{background:#fdeaea;color:#b42318}
+    .ajuste{background:#eef1f8;color:#1f3a66}
+    .critico{color:#b42318;font-weight:600}
+    .muted{color:#666}
+   
+    @media print {
+      .no-print { display: none !important; }
+      .table { border-collapse: collapse; width: 100%; }
+      .table th, .table td { border: 1px solid #ccc; padding: 6px; }
+      .header-print { margin-bottom: 12px; }
+    }

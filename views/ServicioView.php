@@ -1,21 +1,17 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) session_start();
-
-require_once '../model/Servicio.php';
-require_once '../model/Conexion.php';
-
-$servicioModel = new Servicio();
-$servicios = $servicioModel->obtenerServicios();
-
-$servicioEditar = null;
-if (isset($_GET['editar'])) {
-    $servicioEditar = $servicioModel->obtenerPorId($_GET['editar']);
-}
-
-$conn = Conexion::conectar();
-
-include '../components/navbar.php';
+  if (session_status() === PHP_SESSION_NONE) session_start();
+    require_once '../model/Servicio.php';
+    require_once '../model/Conexion.php';
+    $servicioModel = new Servicio();
+    $servicios = $servicioModel->obtenerServicios();
+    $servicioEditar = null;
+    if (isset($_GET['editar'])) {
+      $servicioEditar = $servicioModel->obtenerPorId($_GET['editar']);
+  }
+  $conn = Conexion::conectar();
+  include '../components/navbar.php';
 ?>
+
 <head>
   <title>Servicios</title>
 </head>
@@ -26,7 +22,7 @@ include '../components/navbar.php';
   <div class="card mb-4">
     <div class="card-header"><?= $servicioEditar ? "Editar Servicio" : "Nuevo Servicio" ?></div>
     <div class="card-body">
-      <form method="post" action="../controller/ServicioController.php">
+      <form method="post" action="../controller/ServicioController.php" novalidate>
         <input type="hidden" name="id" value="<?= $servicioEditar['id'] ?? '' ?>">
 
         <!-- Vehículo -->
@@ -34,37 +30,39 @@ include '../components/navbar.php';
           <label class="form-label">Vehículo<span class="text-danger"> * </span></label>
           <select name="vehiculo_id" class="form-select" required>
             <option value="">Seleccione un vehículo</option>
-            <?php
-            $sql = "SELECT v.id, CONCAT(v.placa, ' - ', v.marca, ' ', v.modelo) AS vehiculo, c.nombre AS cliente
+              <?php
+                $sql = "SELECT v.id, CONCAT(v.placa, ' - ', v.marca, ' ', v.modelo) AS vehiculo, c.nombre AS cliente
                     FROM vehiculos v
                     INNER JOIN clientes c ON v.cliente = c.id";
-            $result = $conn->query($sql);
-            while ($row = $result->fetch_assoc()) {
-                $selected = ($servicioEditar && $servicioEditar['vehiculo_id'] == $row['id']) ? "selected" : "";
-                echo "<option value='".$row['id']."' $selected>".$row['vehiculo']." (".$row['cliente'].")</option>";
-            }
-            ?>
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                  $selected = ($servicioEditar && $servicioEditar['vehiculo_id'] == $row['id']) ? "selected" : "";
+                  echo "<option value='".$row['id']."' $selected>".$row['vehiculo']." (".$row['cliente'].")</option>";
+                }
+              ?>
           </select>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <!-- Descripción -->
         <div class="mb-3">
           <label class="form-label">Ingresa una Descripción del servicio que se brindará: <span class="text-danger"> * </span></label>
           <textarea name="descripcion" placeholder="Servicio de mantenimiento preventivo,..." class="form-control" rows="3" required><?= $servicioEditar['descripcion'] ?? '' ?></textarea>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <!-- Fecha -->
         <div class="mb-3">
           <label class="form-label">Fecha<span class="text-danger"> * </span></label>
-          <input type="date" name="fecha" class="form-control"
-                 value="<?= $servicioEditar['fecha'] ?? '' ?>" required>
+          <input type="date" name="fecha" class="form-control" value="<?= $servicioEditar['fecha'] ?? '' ?>" required>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <!-- Costo -->
         <div class="mb-3">
           <label class="form-label">Ingresa el Costo Total del servicio: <span class="text-danger"> * </span></label>
-          <input type="number" step="0.01" name="costo" placeholder="$00.00 " class="form-control"
-                 value="<?= $servicioEditar['costo'] ?? '' ?>" required>
+          <input type="number" step="0.01" name="costo" placeholder="$00.00 " class="form-control" value="<?= $servicioEditar['costo'] ?? '' ?>" required>
+          <div class="invalid-feedback">Este campo es obligatorio.</div>
         </div>
 
         <?php if ($servicioEditar): ?>
@@ -111,15 +109,30 @@ include '../components/navbar.php';
             <a href="../controller/ServicioController.php?eliminar=<?= $servicio['id'] ?>" 
                onclick="return confirm('¿Eliminar este servicio?')" 
                class="btn btn-sm btn-danger w-100 m-1">Eliminar</a>
-          </td>
+            
+            <form class="paypal" action="../views/paypal/payments.php" method="post" id="paypal_form">
+              <input type="hidden" name="cmd" value="_xclick" />
+              <input type="hidden" name="no_note" value="1" />
+              <input type="hidden" name="lc" value="UK" />
+              <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest" />
+
+              <input type="hidden" name="payer_email" value="customer@example.com" />
+              <input type="hidden" name="item_number"  value="<?= $servicio['id'] ?>"  />
+              <input type="hidden" name="item_name" value="<?= $servicio['vehiculo'] ?>" />
+                  <input type="hidden" name="amount" value="<?= $servicio['costo'] ?>" />
+
+              <input type="submit" name="submit" value="Realizar Pago" class="btn btn-sm w-100 m-1" style="background-color: #13057D; color: white; border: none;"/>
+            </form>
+              </td>
         </tr>
       <?php endwhile; ?>
     </tbody>
   </table>
   <div class="mb-3">
-  <a href="/Taller_Mecanico_DSI_/views/ServicioReporteView.php" class="btn btn-outline-primary" target="_blank">
+  <a href="../views/ServicioReporteView.php" class="btn btn-outline-primary" target="_blank">
     📊 Informe General de Servicios
   </a>
 </div>
 
 </div>
+<script src="../static/js/validacionServicio.js"></script>

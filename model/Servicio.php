@@ -3,7 +3,7 @@ class Servicio {
     private $conn;
 
     public function __construct() {
-        include_once("Conexion.php");
+        //include_once("Conexion.php");
         $this->conn = Conexion::conectar();
     }
 

@@ -1,57 +1,67 @@
 <?php
 // controller/ProveedorController.php
-// Conexión
-include '../controller/conexion.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
 
-$conexion = new mysqli("localhost", "root", "root", "taller");
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
 
-// Agregar proveedor
+// 1. Incluimos los archivos necesarios
+require_once '../model/Conexion.php';
+require_once '../model/Proveedor.php';
+
+
+// 2. Creamos una instancia del Modelo. Él es el único que hablará con la BD.
+$proveedorModel = new Proveedor();
+
+// --- ACCIONES ---
+
+// Si la solicitud es para AGREGAR
 if (isset($_POST['agregarProveedor'])) {
-    $nombre = $_POST['nombre'];
-    $nombre_contacto = $_POST['nombre_contacto'];
-    $telefono = $_POST['telefono'];
-    $correo_electronico = $_POST['correo_electronico'];
-    $direccion = $_POST['direccion'];
-    $rubro = $_POST['rubro'];
+    // Recolectamos los datos del formulario
+    $nombre = trim($_POST['nombre'] ?? '');
+    $nombre_contacto = trim($_POST['nombre_contacto'] ?? '');
+    $telefono = trim($_POST['telefono'] ?? '');
+    $correo_electronico = trim($_POST['correo_electronico'] ?? '');
+    $direccion = trim($_POST['direccion'] ?? '');
+    $rubro = trim($_POST['rubro'] ?? '');
 
-    $conexion->query("INSERT INTO proveedor_insumos (nombre, nombre_contacto, telefono, correo_electronico, direccion, rubro) 
-                      VALUES ('$nombre', '$nombre_contacto', '$telefono', '$correo_electronico', '$direccion', '$rubro')");
-    header("Location: ProveedorView.php");
+    // Llamamos al método del MODELO para que guarde los datos
+    $proveedorModel->agregarProveedor($nombre, $nombre_contacto, $telefono, $correo_electronico, $direccion, $rubro);
+    
+    // Redirigimos a la vista con un mensaje de éxito
+    header("Location: ../views/ProveedorView.php?msg=Proveedor+agregado");
     exit;
 }
-// Editar proveedor
+
+// Si la solicitud es para EDITAR
 if (isset($_POST['editarProveedor'])) {
-    $id = $_POST['id'];
-    $nombre = $_POST['nombre'];
-    $nombre_contacto = $_POST['nombre_contacto'];
-    $telefono = $_POST['telefono'];
-    $correo_electronico = $_POST['correo_electronico'];
-    $direccion = $_POST['direccion'];
-    $rubro = $_POST['rubro'];
+    $id = (int)($_POST['id'] ?? 0);
+    $nombre = trim($_POST['nombre'] ?? '');
+    $nombre_contacto = trim($_POST['nombre_contacto'] ?? '');
+    $telefono = trim($_POST['telefono'] ?? '');
+    $correo_electronico = trim($_POST['correo_electronico'] ?? '');
+    $direccion = trim($_POST['direccion'] ?? '');
+    $rubro = trim($_POST['rubro'] ?? '');
+    
+    // Llamamos al método del MODELO para que actualice los datos
+    $proveedorModel->actualizarProveedor($id, $nombre, $nombre_contacto, $telefono, $correo_electronico, $direccion, $rubro);
 
-    $conexion->query("UPDATE proveedor_insumos 
-                      SET nombre = '$nombre', nombre_contacto = '$nombre_contacto', telefono = '$telefono', 
-                          correo_electronico = '$correo_electronico', direccion = '$direccion', rubro = '$rubro' 
-                      WHERE id_proveedor = $id");
-    header("Location: ProveedorView.php");
+    // Redirigimos
+    header("Location: ../views/ProveedorView.php?msg=Proveedor+actualizado");
     exit;
 }
-// Eliminar proveedor
+
+// Si la solicitud es para ELIMINAR (Esta es la sección que te daba el error en la línea 65)
 if (isset($_GET['eliminar'])) {
-    $id = $_GET['eliminar'];
-    $conexion->query("DELETE FROM proveedor_insumos WHERE id_proveedor = $id");
-    header("Location: ProveedorView.php");
+    $id = (int)$_GET['eliminar'];
+    
+    // NO hacemos la consulta aquí.
+    // LLAMAMOS al método del modelo para que él haga el trabajo.
+    $proveedorModel->eliminarProveedor($id);
+    
+    // Redirigimos
+    header("Location: ../views/ProveedorView.php?msg=Proveedor+eliminado");
     exit;
 }
-// Obtener proveedor para editar
-$editarProveedor = null;
-if (isset($_GET['editar'])) {
-    $id = $_GET['editar'];
-    $resultado = $conexion->query("SELECT * FROM proveedor_insumos WHERE id_proveedor = $id");
-    $editarProveedor = $resultado->fetch_assoc();
-}
-// Obtener proveedores
-$resultado = $conexion->query("SELECT * FROM proveedor_insumos");
+
+// Si se llega al controlador sin ninguna acción, simplemente redirigimos a la vista principal.
+header("Location: ../views/ProveedorView.php");
+exit;

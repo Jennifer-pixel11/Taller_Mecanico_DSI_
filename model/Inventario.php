@@ -1,13 +1,11 @@
 <?php
-
-require_once __DIR__ . "/Conexion.php";
-
 class Inventario {
   private $conn;
 
   public function __construct() {
-    $this->conn = Conexion::conectar();
-  }
+        include_once("Conexion.php");
+        $this->conn = Conexion::conectar();
+    }
 
   public function obtenerTodos() {
     $sql = "SELECT i.*, p.nombre AS nombre_proveedor

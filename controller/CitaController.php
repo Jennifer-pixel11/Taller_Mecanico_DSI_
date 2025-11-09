@@ -6,12 +6,18 @@ $citaModel = new Cita();
 
 // Guardar nueva cita
 if (isset($_POST['agendar'])) {
-    $cliente_id  = $_POST['cliente_id'];
-    $vehiculo_id = $_POST['vehiculo_id'];
-    $servicio_id = $_POST['servicio_id'];
-    $fecha       = $_POST['fecha'];
-    $hora        = $_POST['hora'];
-    $descripcion = $_POST['descripcion'];
+    $cliente_id  = $_POST['cliente_id'] ?? '';
+    $vehiculo_id = $_POST['vehiculo_id'] ?? '';
+    $servicio_id = $_POST['servicio_id'] ?? '';
+    $fecha       = $_POST['fecha'] ?? '';
+    $hora        = $_POST['hora'] ?? '';
+    $descripcion = $_POST['descripcion'] ?? '';
+
+    // Server-side validation
+    if (empty($cliente_id) || empty($vehiculo_id) || empty($servicio_id) || empty($fecha) || empty($hora) || empty($descripcion)) {
+        header("Location: ../views/CitaView.php?error=Por+favor+complete+todos+los+campos+obligatorios");
+        exit;
+    }
 
     $id_mecanico = $citaModel->asignarMecanico($fecha);
 
@@ -23,13 +29,19 @@ if (isset($_POST['agendar'])) {
 
 // Editar cita
 if (isset($_POST['editar'])) {
-    $id          = $_POST['id'];
-    $cliente_id  = $_POST['cliente_id'];
-    $vehiculo_id = $_POST['vehiculo_id'];
-    $servicio_id = $_POST['servicio_id'];
-    $fecha       = $_POST['fecha'];
-    $hora        = $_POST['hora'];
-    $descripcion = $_POST['descripcion'];
+    $id          = $_POST['id'] ?? '';
+    $cliente_id  = $_POST['cliente_id'] ?? '';
+    $vehiculo_id = $_POST['vehiculo_id'] ?? '';
+    $servicio_id = $_POST['servicio_id'] ?? '';
+    $fecha       = $_POST['fecha'] ?? '';
+    $hora        = $_POST['hora'] ?? '';
+    $descripcion = $_POST['descripcion'] ?? '';
+
+    // Server-side validation
+    if (empty($id) || empty($cliente_id) || empty($vehiculo_id) || empty($servicio_id) || empty($fecha) || empty($hora) || empty($descripcion)) {
+        header("Location: ../views/CitaView.php?error=Por+favor+complete+todos+los+campos+obligatorios");
+        exit;
+    }
 
     $id_mecanico = $citaModel->asignarMecanico($fecha);
 
