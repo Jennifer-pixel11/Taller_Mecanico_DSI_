@@ -47,4 +47,17 @@ class Vehiculo {
         $stmt->bind_param("i", $id);
         $stmt->execute();
     }
+    // Obtener vehículos de un cliente específico (por ID de cliente)
+public function obtenerVehiculosPorCliente($clienteId) {
+    $stmt = $this->conn->prepare(
+        "SELECT v.id, v.placa, v.marca, v.modelo 
+         FROM vehiculos v
+         INNER JOIN clientes c ON v.cliente = c.id
+         WHERE v.cliente = ?"
+    );
+    $stmt->bind_param("i", $clienteId);
+    $stmt->execute();
+    return $stmt->get_result();
+}
+
 }

@@ -32,7 +32,12 @@ if (isset($_POST['accion'])) {
             if (password_verify($clave, $user['clave'])) {
                 $_SESSION['usuario'] = $user['usuario'];
                 $_SESSION['rol'] = $user['rol'];
-                header("Location: ../main.php");
+                 // ✅ Redirección según el rol
+                if ($user['rol'] === 'Visitante') {
+                    header("Location: ../views/ClientePerfilView.php");
+                } else {
+                    header("Location: ../main.php");
+                }
                 exit;
             } else {
                 echo "<script>alert('Contraseña incorrecta');window.location.href='../index.html';</script>";
