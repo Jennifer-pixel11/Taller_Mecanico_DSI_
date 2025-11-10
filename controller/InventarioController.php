@@ -2,14 +2,34 @@
 require_once(__DIR__ . "/Conexion.php");
 //$conexion = Conexion::conectar();
 
+/*
 if (!function_exists('crearNotificacion')) {
   function crearNotificacion($conexion, $mensaje, $destinatario = 'Sistema') {
     if (!$conexion) return;
     $stmt = $conexion->prepare("INSERT INTO notificaciones (destinatario, mensaje) VALUES (?, ?)");
     if ($stmt) { $stmt->bind_param("ss", $destinatario, $mensaje); $stmt->execute(); }
   }
-}
+}*/
+function crearNotificacion($conexion, $tipo, $mensaje = '', $producto_id = null, $datos = [], $forzar = false) {
+    if (!$conexion) return false;
+    $datos_json = json_encode($datos, JSON_UNESCAPED_UNICODE);
 
+    // Evitar duplicados: si ya existe una alerta no leida del mismo tipo y producto, no crearla
+    if (!$forzar && $producto_id !== null) {
+        $stmt = $conexion->prepare("SELECT id FROM notificaciones WHERE tipo=? AND producto_id=? AND leido=0 LIMIT 1");
+        $stmt->bind_param("si", $tipo, $producto_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res && $res->num_rows > 0) {
+            return false; // ya hay una alerta no leida similar
+        }
+    }
+
+    $stmt = $conexion->prepare("INSERT INTO notificaciones (tipo, destinatario, mensaje, producto_id, datos_json, leido) VALUES (?, 'Sistema', ?, ?, ?, 0)");
+    if (!$stmt) return false;
+    $stmt->bind_param("ssis", $tipo, $mensaje, $producto_id, $datos_json); // nota: tipos pueden necesitar ajuste si producto_id null -> usar bind con tipos dinámicos
+    return $stmt->execute();
+}
 
 if (!function_exists('normalizar_motivo')) {
   function normalizar_motivo($motivo, $por_defecto) {
