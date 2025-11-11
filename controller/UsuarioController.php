@@ -70,17 +70,7 @@ if (isset($_POST['accion'])) {
             exit;
         }
 
-        // Crear usuario
-        $claveHash = password_hash($clave, PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("INSERT INTO usuarios (usuario, clave, rol, correo, telefono) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $usuario, $claveHash, $rol, $correo, $telefono);
-
-        if ($stmt->execute()) {
-            echo "<script>alert('Usuario registrado correctamente');window.location.href='../index.html';</script>";
-        } else {
-            echo "<script>alert('Error al registrar: " . $stmt->error . "');window.location.href='../index.html';</script>";
-        }
-        exit;
+       
     }
 }
 ?>

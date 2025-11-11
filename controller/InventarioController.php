@@ -165,6 +165,15 @@ $proveedores = $conexion->query("SELECT id_proveedor, nombre FROM proveedor_insu
 
 date_default_timezone_set('America/El_Salvador');
 
+// Productos con stock por debajo del mínimo
+$productosBajoStock = $conexion->query("
+    SELECT i.*, p.nombre AS nombre_proveedor
+    FROM inventario i
+    LEFT JOIN proveedor_insumos p ON i.id_proveedor = p.id_proveedor
+    WHERE i.cantidad <= i.cantidad_minima
+    ORDER BY i.cantidad ASC
+");
+
 // Función para listar imágenes del directorio
 function listar_imagenes_dir($relDir) {
     $abs = realpath(__DIR__ . '/../' . $relDir);

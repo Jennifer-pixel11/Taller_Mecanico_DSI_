@@ -1,3 +1,4 @@
+
 <head>
     <title>Dashboard</title>
     <!-- Incluir Chart.js desde CDN -->
@@ -105,3 +106,36 @@ new Chart(document.getElementById("clientesChart"), {
         }
     });
 </script>
+
+<div class="container py-4">
+  <h3 class="mb-3">Productos con stock bajo</h3>
+
+  <div class="row g-3" id="bajo-stock-cards">
+    <?php
+    if (isset($productos)) {
+        $productos->data_seek(0); // aseguramos empezar desde el primero
+        while ($p = $productos->fetch_assoc()):
+            if ((int)$p['cantidad'] <= (int)$p['cantidad_minima']):
+    ?>
+      <div class="col-md-4">
+        <div class="card border-warning">
+          
+          <div class="card-body">
+            <h5 class="card-title"><?= htmlspecialchars($p['nombre']) ?></h5>
+            <p class="card-text">
+              Cantidad: <strong><?= (int)$p['cantidad'] ?></strong><br>
+              Mínimo: <?= (int)$p['cantidad_minima'] ?><br>
+              Proveedor: <?= htmlspecialchars($p['id_proveedor'] ?? '') ?>
+            </p>
+            <a href="InventarioView.php?editar=<?= $p['id'] ?>" class="btn btn-sm btn-warning w-100">Editar</a>
+          </div>
+        </div>
+      </div>
+    <?php
+            endif;
+        endwhile;
+    }
+    ?>
+  </div>
+</div>
+

@@ -67,54 +67,69 @@ include '../components/navbar.php';
         <th>Nombre</th>
         <th>Teléfono</th>
         <th>Correo</th>
-        <th>Dirección</th>
-        <th>Descripcion de usuario</th>
+        <th>Dirección</th>       
         <th>Acciones</th>
+        <th>Descripcion de usuario</th>
       </tr>
     </thead>
-    <tbody>
-       <?php 
-    // Conexión rápida para verificar usuarios
-    include_once("../model/Conexion.php");
-    $conn = Conexion::conectar();
+ <?php
+// Conexión rápida
+include_once("../model/Conexion.php");
+$conn = Conexion::conectar();
 
-    while ($cliente = $clientes->fetch_assoc()):
-        // Buscar si el cliente ya tiene usuario registrado
-        $correo = $cliente['correo'];
-        $sqlUser = "SELECT * FROM usuarios WHERE correo = '$correo'";
-        $resUser = $conn->query($sqlUser);
-        $usuarioExistente = $resUser->num_rows > 0;
-    ?>
-      <tr>
-        <td><?= $cliente['id'] ?></td>
-        <td><?= $cliente['nombre'] ?></td>
-        <td><?= $cliente['telefono'] ?></td>
-        <td><?= $cliente['correo'] ?></td>
-        <td><?= $cliente['direccion'] ?></td>
-        <td>
-            <?php if ($usuarioExistente): ?>
-              <span class="text-success fw-bold">Usuario existente ✅</span><br>
-              <p class="mb-1"><strong>Nombre de usuario:</strong> <?= htmlspecialchars($_GET['usuario']); ?></p>
-              <p class="mb-1"><strong>Contraseña temporal:</strong> <?= htmlspecialchars($_GET['clave']); ?></p>
-              <small class="text-muted">(Recuerda enviarle estos datos al cliente)</small>
-              <a href="../controller/UsuarioController.php?editar=<?= $correo ?>" class="btn btn-sm btn-warning mt-1 w-100">Editar Usuario</a>
-              <a href="../controller/UsuarioController.php?eliminar=<?= $correo ?>" 
-               onclick="return confirm('¿Eliminar usuario del sistema?')" 
-               class="btn btn-sm btn-danger mt-1 w-100">Eliminar Usuario</a>
-            <?php else: ?>
-          <button type="submit" name="crearUsuario" class="btn btn-success mt-1 w-100">Guardar Cliente</button>
+// Traer clientes con info de usuario en una sola consulta
+$sql = "SELECT c.*, u.usuario AS usuario_sistema, u.clave AS clave_temporal
+        FROM clientes c
+        LEFT JOIN usuarios u ON u.correo = c.correo";
+$result = $conn->query($sql);
+?>
+
+<tbody>
+<?php 
+include_once("../model/Conexion.php");
+$conn = Conexion::conectar();
+
+while ($cliente = $clientes->fetch_assoc()):
+    $correo = $cliente['correo'];
+    $sqlUser = "SELECT * FROM usuarios WHERE correo = '$correo'";
+    $resUser = $conn->query($sqlUser);
+    $usuarioExistente = $resUser->num_rows > 0;
+?>
+<tr>
+    <td><?= $cliente['id'] ?></td>
+    <td><?= htmlspecialchars($cliente['nombre']) ?></td>
+    <td><?= htmlspecialchars($cliente['telefono']) ?></td>
+    <td><?= htmlspecialchars($cliente['correo']) ?></td>
+    <td><?= htmlspecialchars($cliente['direccion']) ?></td>
+    <td>
+        <a href="?editar=<?= $cliente['id'] ?>" class="btn btn-sm btn-warning w-100 m-1">Editar Cliente</a>
+        <a href="../controller/ClienteController.php?eliminar=<?= $cliente['id'] ?>" 
+           onclick="return confirm('¿Eliminar este cliente?')" 
+           class="btn btn-sm btn-danger w-100 m-1">Eliminar Cliente</a>
+    </td>
+    <td>
+        <?php if ($usuarioExistente): ?>
+            <span class="text-success fw-bold">Usuario existente ✅</span><br>
+
+            <?php if (isset($_GET['usuario']) && $_GET['usuario'] === $correo): ?>
+                <p class="mb-1"><strong>Nombre de usuario:</strong> <?= htmlspecialchars($_GET['usuario']); ?></p>
+                <p class="mb-1"><strong>Contraseña temporal:</strong> <?= htmlspecialchars($_GET['clave']); ?></p>
+                <small class="text-muted usuario-temporal">(Recuerda enviarle estos datos al cliente)</small>
             <?php endif; ?>
-        </td>
-        <td>
-          <a href="?editar=<?= $cliente['id'] ?>" class="btn btn-sm btn-warning w-100 m-1">Editar</a>
-          <a href="../controller/ClienteController.php?eliminar=<?= $cliente['id'] ?>" 
-             onclick="return confirm('¿Eliminar este cliente?')" 
-             class="btn btn-sm btn-danger w-100 m-1">Eliminar</a>
-        </td>
-        </tr>
-      <?php endwhile; ?>
-       
-    </tbody>
+
+        <?php else: ?>
+            <form method="post" action="../controller/ClienteController.php">
+                <input type="hidden" name="correo" value="<?= htmlspecialchars($cliente['correo']); ?>">
+                <input type="hidden" name="telefono" value="<?= htmlspecialchars($cliente['telefono']); ?>">
+                 <span class="text-danger fw-bold">Cliente sin Usuario ❌⚠️</span><br>
+            </form>
+        <?php endif; ?>
+    </td>
+</tr>
+<?php endwhile; ?>
+</tbody>
+
+
   </table>
 </div>
 <script src="../static/js/validacionCliente.js"></script>

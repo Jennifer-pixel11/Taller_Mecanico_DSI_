@@ -25,7 +25,7 @@ class Usuario {
     $sql = "INSERT INTO usuarios (usuario, correo, telefono, clave, rol)
             VALUES (?, ?, ?, ?, ?)";
     $stmt = $this->conn->prepare($sql);
-    $stmt->bind_param("sssss", $usuario, $correo, $telefono, $clave, $rol);
+    $stmt->bind_param("sssss", $usuario, $correo, $telefono, $clave,  $rol);
     $stmt->execute();
 
     return $stmt->affected_rows > 0 ? "creado" : "error";

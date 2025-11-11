@@ -19,7 +19,7 @@ if (isset($_POST['agregar'])) {
     $claveTemporal = "1234"; // clave temporal visible
     $claveEncriptada = password_hash($claveTemporal, PASSWORD_DEFAULT);
     $rol = 'Visitante';
-    $resultado = $usuarioModel->crearUsuario($usuario, $correo, $telefono, $claveHash, $rol);
+    $resultado = $usuarioModel->crearUsuario($usuario, $correo, $telefono, $claveEncriptada, $rol);
 
 if ($resultado === "existe") {
     // Simplemente mostrás un mensaje amigable
@@ -33,16 +33,7 @@ if ($resultado === "existe") {
     header("Location: ../views/ClienteView.php?usuario=$usuario&clave=$claveTemporal");
     exit;
 }
-if (isset($_POST['crearUsuario'])){
-      // Crear usuario automáticamente
-    $usuario = $correo; // Usamos el correo como nombre de usuario
-    $claveTemporal = "1234"; // clave temporal visible
-    $claveEncriptada = password_hash($claveTemporal, PASSWORD_DEFAULT);
-    $rol = 'Visitante';
-    $resultado = $usuarioModel->crearUsuario($usuario, $correo, $telefono, $claveHash, $rol);
-     // Simplemente mostrás un mensaje amigable
-    echo "<script>alert('Usuario creado con exito');</script>";
-}
+
 
 // Editar cliente
 if (isset($_POST['editar'])) {
