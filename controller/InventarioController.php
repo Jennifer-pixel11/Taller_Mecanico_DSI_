@@ -170,9 +170,12 @@ $productosBajoStock = $conexion->query("
     SELECT i.*, p.nombre AS nombre_proveedor
     FROM inventario i
     LEFT JOIN proveedor_insumos p ON i.id_proveedor = p.id_proveedor
-    WHERE i.cantidad <= i.cantidad_minima
+    WHERE i.cantidad IS NOT NULL 
+      AND i.cantidad_minima IS NOT NULL
+      AND i.cantidad <= i.cantidad_minima
     ORDER BY i.cantidad ASC
 ");
+
 
 // Función para listar imágenes del directorio
 function listar_imagenes_dir($relDir) {

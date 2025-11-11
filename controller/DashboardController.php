@@ -19,5 +19,12 @@ $estadisticas = $dashboardModel->obtenerEstadisticas();
 $estadisticasInventario = $dashboardModel->obtenerEstadisticasInventario();
 
 // Incluir la vista del dashboard
-include("./components/dashboard.php");
+
+include_once("model/Inventario.php");
+$inventarioModel = new Inventario();
+
+$productosBajoStock = $inventarioModel->obtenerBajoStock();
+
+include("components/dashboard.php");
+
 ?>

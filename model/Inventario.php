@@ -43,4 +43,14 @@ class Inventario {
     $stmt->bind_param("i", $id);
     return $stmt->execute();
   }
+public function obtenerBajoStock() {
+    $sql = "SELECT i.*, p.nombre AS nombre_proveedor
+            FROM inventario i
+            LEFT JOIN proveedor_insumos p ON i.id_proveedor = p.id_proveedor
+            WHERE i.cantidad <= i.cantidad_minima
+            ORDER BY i.cantidad ASC";
+    return $this->conn->query($sql);
+}
+
+
 }
