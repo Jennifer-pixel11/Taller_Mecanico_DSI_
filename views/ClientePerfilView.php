@@ -104,7 +104,7 @@ $vehiculos = $stmtVehiculos->get_result();
           <p class="card-text"><strong>Teléfono:</strong> <?= htmlspecialchars($cliente['telefono'] ?? 'No registrado'); ?></p>
           <p class="card-text"><strong>Rol:</strong> <?= htmlspecialchars($cliente['rol']); ?></p>
           <hr>
-          <a href="#" class="btn btn-primary">Editar perfil</a>
+          <!-- <a href="#" class="btn btn-primary">Editar perfil</a> -->
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@ $vehiculos = $stmtVehiculos->get_result();
           <p><strong>Teléfono:</strong> <?= htmlspecialchars($datosCliente['telefono'] ?? $cliente['telefono']); ?></p>
           <p><strong>Dirección:</strong> <?= htmlspecialchars($datosCliente['direccion'] ?? 'No registrada'); ?></p>
           <hr>
-          <a href="#" class="btn btn-primary">Editar perfil</a>
+          <!-- <a href="#" class="btn btn-primary">Editar perfil</a> -->
         </div>
       </div>
     </div>

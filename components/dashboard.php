@@ -157,6 +157,32 @@ new Chart(document.getElementById("clientesChart"), {
   </div>
 </div>
 
+<div class="container py-4">
+  <h3 class="mb-3">Citas pendientes</h3>
+
+  <div class="row g-3">
+    <?php if ($citasPendientes && $citasPendientes->num_rows > 0): ?>
+        <?php while ($cita = $citasPendientes->fetch_assoc()): ?>
+            <div class="col-md-4">
+                <div class="card border-info">
+                    <div class="card-body">
+                        <h5 class="card-title">Cliente: <?= htmlspecialchars($cita['cliente_id'] ?? 'No definido') ?></h5>
+                        <p class="card-text">
+                            Fecha: <?= htmlspecialchars($cita['fecha']) ?><br>
+                            Hora: <?= htmlspecialchars($cita['hora'] ?? '') ?><br>
+                            Servicio: <?= htmlspecialchars($cita['servicio'] ?? 'No especificado') ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <p class="text-muted">No hay citas pendientes.</p>
+    <?php endif; ?>
+  </div>
+</div>
+
+
 
 <!-- 🔹 Estilos de animación -->
 <style>
@@ -189,6 +215,42 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<?php if (isset($citasPendientes) && $citasPendientes->num_rows > 0): ?>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  Swal.fire({
+    title: '📅 Citas pendientes',
+    text: 'Tienes <?= $citasPendientes->num_rows ?> cita(s) pendientes por atender.',
+    icon: 'info',
+    toast: true,
+    position: 'top-end',
+    timer: 2000,
+    showConfirmButton: false,
+    background: '#e3f2fd',
+    color: '#000'
+  });
+
+  // Esperar 4.5 segundos y luego mostrar la otra alerta
+  setTimeout(() => {
+    <?php if (isset($productosBajoStock) && $productosBajoStock->num_rows > 0): ?>
+      Swal.fire({
+        title: '⚠️ Stock bajo detectado',
+        text: 'Hay productos con poca existencia. Revisa el inventario.',
+        icon: 'warning',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        background: '#fff8e1',
+        color: '#000'
+      });
+    <?php endif; ?>
+  }, 4500);
+});
+</script>
+<?php endif; ?>
+
 
 
 

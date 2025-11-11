@@ -27,6 +27,10 @@ include_once("model/Inventario.php");
 $inventarioModel = new Inventario();
 
 $productosBajoStock = $inventarioModel->obtenerBajoStock();
+require_once './model/Cita.php';
+
+$citaModel = new Cita();
+$citasPendientes = $citaModel->obtenerPendientes(3); // solo mostrar 3 por ejemplo
 
 include("components/dashboard.php");
 

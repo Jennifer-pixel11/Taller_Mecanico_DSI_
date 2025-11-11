@@ -40,6 +40,25 @@ class Cita {
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+public function obtenerPendientes($limite = 5) {
+    $sql = "SELECT 
+                id, 
+                cliente, 
+                servicio, 
+                fecha, 
+                hora, 
+                estado
+            FROM citas
+            WHERE estado = 'Pendiente'
+            ORDER BY fecha ASC
+            LIMIT ?";
+            
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param('i', $limite);
+    $stmt->execute();
+    return $stmt->get_result();
+}
+
 
     // Editar cita
     public function editarCita($id, $cliente_id, $vehiculo_id, $servicio_id, $fecha, $hora, $descripcion, $id_mecanico = null) {
