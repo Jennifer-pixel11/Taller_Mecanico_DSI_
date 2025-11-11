@@ -22,6 +22,14 @@ class Cliente {
         return $this->conn->query($sql);
     }
 
+      // ✅ NUEVO: Obtener los últimos clientes registrados
+    public function obtenerUltimosClientes($limite = 2) {
+        $stmt = $this->conn->prepare("SELECT * FROM clientes ORDER BY id DESC LIMIT ?");
+        $stmt->bind_param("i", $limite);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     // Obtener un cliente por ID
     public function obtenerPorId($id) {
         $stmt = $this->conn->prepare("SELECT * FROM clientes WHERE id = ?");

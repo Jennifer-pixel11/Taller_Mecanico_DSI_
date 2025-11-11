@@ -5,6 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once './model/DashboardModel.php';
+require_once("./model/Cliente.php");
+$clienteModel = new Cliente();
+$ultimosClientes = $clienteModel->obtenerUltimosClientes(2);
 
 // Crear instancia del modelo
 $dashboardModel = new DashboardModel();

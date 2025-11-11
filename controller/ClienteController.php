@@ -34,7 +34,6 @@ if ($resultado === "existe") {
     exit;
 }
 
-
 // Editar cliente
 if (isset($_POST['editar'])) {
     $id = $_POST['id'];

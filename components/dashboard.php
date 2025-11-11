@@ -114,7 +114,7 @@ new Chart(document.getElementById("clientesChart"), {
     <?php if ($productosBajoStock && $productosBajoStock->num_rows > 0): ?>
         <?php while ($p = $productosBajoStock->fetch_assoc()): ?>
             <div class="col-md-4">
-                <div class="card border-warning">
+                <div class="card border-warning producto-stock">
                     <div class="card-body">
                         <h5 class="card-title"><?= htmlspecialchars($p['nombre']) ?></h5>
                         <p class="card-text">
@@ -122,7 +122,6 @@ new Chart(document.getElementById("clientesChart"), {
                             Mínimo: <?= (int)$p['cantidad_minima'] ?><br>
                             Proveedor: <?= htmlspecialchars($p['nombre_proveedor'] ?? '') ?>
                         </p>
-                        <a href="InventarioView.php?editar=<?= $p['id'] ?>" class="btn btn-sm btn-warning w-100">Editar</a>
                     </div>
                 </div>
             </div>
@@ -133,7 +132,66 @@ new Chart(document.getElementById("clientesChart"), {
   </div>
 </div>
 
+<div class="container py-4">
+  <h3 class="mb-3">🧍 Últimos clientes registrados</h3>
 
+  <div class="row g-3">
+    <?php if ($ultimosClientes && $ultimosClientes->num_rows > 0): ?>
+      <?php while ($c = $ultimosClientes->fetch_assoc()): ?>
+        <div class="col-md-6">
+          <div class="card border-primary shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title"><?= htmlspecialchars($c['nombre']) ?></h5>
+              <p class="card-text">
+                <strong>Teléfono:</strong> <?= htmlspecialchars($c['telefono']) ?><br>
+                <strong>Correo:</strong> <?= htmlspecialchars($c['correo']) ?><br>
+                <strong>Dirección:</strong> <?= htmlspecialchars($c['direccion']) ?>
+              </p>
+            </div>
+          </div>
+        </div>
+      <?php endwhile; ?>
+    <?php else: ?>
+      <p class="text-muted">No hay clientes recientes.</p>
+    <?php endif; ?>
+  </div>
 </div>
+
+
+<!-- 🔹 Estilos de animación -->
+<style>
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+</style>
+
+<!-- 🔹 Script para reproducir sonido y animar -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const productos = document.querySelectorAll(".producto-stock");
+
+  if (productos.length > 0) {
+    // Reproduce un sonido cuando haya productos con bajo stock
+    const alertSound = new Audio("alerta.mp3"); // coloca el archivo alerta.mp3 en tu carpeta raíz o assets/
+    alertSound.play();
+
+    // Aplica la animación shake a cada card
+    productos.forEach(card => {
+      card.classList.add("shake");
+      setTimeout(() => card.classList.remove("shake"), 1000);
+    });
+  }
+});
+</script>
+
+
+
+
 
 
