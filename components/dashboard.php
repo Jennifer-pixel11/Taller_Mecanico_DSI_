@@ -166,11 +166,11 @@ new Chart(document.getElementById("clientesChart"), {
             <div class="col-md-4">
                 <div class="card border-info">
                     <div class="card-body">
-                        <h5 class="card-title">Cliente: <?= htmlspecialchars($cita['cliente_id'] ?? 'No definido') ?></h5>
+                        <h5 class="card-title">Cliente: <?= htmlspecialchars($cita['cliente'] ?? 'Ver Mas Detalles en Citas') ?></h5>
                         <p class="card-text">
                             Fecha: <?= htmlspecialchars($cita['fecha']) ?><br>
                             Hora: <?= htmlspecialchars($cita['hora'] ?? '') ?><br>
-                            Servicio: <?= htmlspecialchars($cita['servicio'] ?? 'No especificado') ?>
+                            Servicio: <?= htmlspecialchars($cita['servicio'] ?? 'Ver Mas Detalles en Citas' ) ?>
                         </p>
                     </div>
                 </div>
